@@ -1,0 +1,185 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch"]
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum userRole {
+  ADMIN
+  USER
+}
+
+model User {
+  id           String   @id
+  username     String   @unique
+  displayName  String
+  role         userRole @default(USER)
+  email        String?  @unique
+  passwordHash String?
+  googleId     String?  @unique
+  avatarUrl    String?
+
+  orders    Order[]
+  carts     Cart[]
+  addresses Address[]
+  sessions  Session[]
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+
+  // @@map("users")
+}
+
+model Session {
+  id        String   @id
+  expiresAt DateTime
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // @@map("sessions")
+}
+
+model Address {
+  id     String @id @default(uuid())
+  street String
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  orders Order[]
+  // @@map("addresses")
+
+  @@index([userId])
+}
+
+model Order {
+  id          String  @id @default(uuid())
+  isCompleted Boolean @default(false)
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+
+  addressId String
+  address   Address @relation(fields: [addressId], references: [id])
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  items OrderItem[]
+  // @@map("orders")
+
+  @@index([userId])
+}
+
+model OrderItem {
+  id       String @id @default(uuid())
+  quantity Int
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+
+  orderId String
+  order   Order  @relation(fields: [orderId], references: [id])
+
+  productId String
+  product   Product @relation(fields: [productId], references: [id])
+  // @@map("orders_items")
+
+  @@unique([orderId, productId])
+  @@index([orderId])
+  @@index([productId])
+}
+
+model Cart {
+  id String @id @default(uuid())
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+
+  userId String?
+  user   User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  items CartItem[]
+
+  // @@map("carts")
+}
+
+model CartItem {
+  id       String @id @default(uuid())
+  quantity Int
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+
+  cartId String
+  cart   Cart   @relation(fields: [cartId], references: [id], onDelete: Cascade)
+
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  // @@map("carts_items")
+
+  @@unique([cartId, productId])
+  @@index([cartId])
+  @@index([productId])
+}
+
+model Product {
+  id          String   @id @default(uuid())
+  title       String
+  description String?
+  price       Float
+  slug        String   @unique
+  img         String[]
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+
+  cartItems  CartItem[]
+  orderItems OrderItem[]
+
+  subcategoryId String
+  subcategory   Subcategory @relation(fields: [subcategoryId], references: [id])
+
+  // @@map("products")
+
+  @@index([subcategoryId])
+}
+
+model Subcategory {
+  id   String @id @default(uuid())
+  name String
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+
+  products Product[]
+
+  mainCategoryId String
+  mainCategory   MainCategory @relation(fields: [mainCategoryId], references: [id])
+
+  // @@map("sub_categories")
+
+  @@index([mainCategoryId])
+}
+
+model MainCategory {
+  id   String @id @default(uuid())
+  name String
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+
+  subcategories Subcategory[]
+
+  // @@map("main_categories")
+}
