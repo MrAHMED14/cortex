@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client"
 
 import {
@@ -52,46 +53,6 @@ export default function MenuItems({
         className="hidden min-[1140px]:flex items-center gap-8"
         cartSize={cartSize}
       />
-
-      {/* Light / dark mode toggle */}
-      <ThemeSwitcher />
-
-      {user ? (
-        // Avatar Component
-        <UserAvatar username={user.displayName} imgUrl={user.avatarUrl} />
-      ) : (
-        // Auth Component
-        <AuthButton className="hidden min-[375px]:flex" />
-      )}
-
-      {/* Mobile Menu */}
-      <div className="min-[1140px]:hidden flex">
-        <Sheet>
-          <SheetTrigger>
-            <h3 className="sr-only">Main Menu</h3>
-            <MenuIcon className="w-6 h-6" />
-          </SheetTrigger>
-          <SheetContent
-            className={cn(
-              "flex flex-col",
-              !user && "max-[375px]:justify-between"
-            )}
-          >
-            <SheetHeader>
-              <SheetTitle className="text-start">Main Menu</SheetTitle>
-              <SheetDescription>
-                <h3 className="sr-only">this is the main menu</h3>
-              </SheetDescription>
-              <Search className="sm:hidden flex" />
-            </SheetHeader>
-            <Menu
-              className="flex flex-col items-start gap-y-5"
-              cartSize={cartSize}
-            />
-            {!user && <AuthButton className="min-[375px]:hidden flex" />}
-          </SheetContent>
-        </Sheet>
-      </div>
     </div>
   )
 }
@@ -110,8 +71,8 @@ export function Menu({
         href={"/"}
         className={cn(
           pathname === "/"
-            ? "text-stone-950 dark:text-white font-semibold"
-            : "text-muted-foreground"
+            ? "text-primary font-bold"
+            : "hover:text-primary font-semibold text-neutral-700"
         )}
       >
         Home
@@ -121,38 +82,44 @@ export function Menu({
         href={"/shop"}
         className={cn(
           pathname === "/shop"
-            ? "text-stone-950 dark:text-white font-semibold"
-            : "text-muted-foreground"
+            ? "text-primary font-bold"
+            : "hover:text-primary font-semibold text-neutral-700"
         )}
       >
         Shop
       </Link>
 
-      <Link
-        href={"/shop/cart"}
+      {/* <Link
+        href={"/my-pc"}
         className={cn(
-          pathname === "/shop/cart"
-            ? "text-stone-950 dark:text-white font-semibold"
-            : "text-muted-foreground"
+          pathname === "/my-pc"
+            ? "text-primary font-bold"
+            : "hover:text-primary font-semibold text-neutral-700"
         )}
       >
-        <p className="flex items-center gap-1">
-          Cart
-          <span className="flex items-start justify-start h-5 text-[9px]">
-            {cartSize}
-          </span>
-        </p>
+        Hot Deals
+      </Link> */}
+
+      <Link
+        href={"/my-pc"}
+        className={cn(
+          pathname === "/my-pc"
+            ? "text-primary font-bold"
+            : "hover:text-primary font-semibold text-neutral-700"
+        )}
+      >
+        Blog
       </Link>
 
       <Link
-        href={"/my-orders"}
+        href={"/contact"}
         className={cn(
-          pathname === "/my-orders"
-            ? "text-stone-950 dark:text-white font-semibold"
-            : "text-muted-foreground"
+          pathname === "/contact"
+            ? "text-primary font-bold"
+            : "hover:text-primary font-semibold text-neutral-700"
         )}
       >
-        My Orders
+        Contact
       </Link>
     </div>
   )
@@ -208,16 +175,28 @@ export function UserAvatar({ username, imgUrl }: UserAvatarProps) {
               className="object-cover w-full h-full rounded-full"
             />
           ) : (
-            <div className="dark:bg-white bg-stone-950/90 w-9 h-9 rounded-full aspect-square object-center flex items-center justify-center">
-              <UserCircle2Icon className="dark:text-stone-950/70 text-white/90" />
-            </div>
+            <img
+              src="https://api.dicebear.com/9.x/notionists/svg"
+              alt="avatar"
+              className="object-cover w-full h-full rounded-full bg-blue-500 shrink-0 "
+            />
+
+            // <div className="dark:bg-white bg-stone-950/90 w-9 h-9 rounded-full aspect-square object-center flex items-center justify-center">
+            //   <UserCircle2Icon className="dark:text-stone-950/70 text-white/90" />
+            // </div>
           )}
         </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="mr-7">
-        <DropdownMenuLabel>{username ?? "Username"}</DropdownMenuLabel>
+        <DropdownMenuLabel>
+          <span>{username ?? "Username"}</span>
+          <br />
+          <span className="text-neutral-500 text-xs">chikhaoui@ahmed.dev</span>
+        </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem className="cursor-pointer">Profile</DropdownMenuItem>
+        <Link href="/my-orders">
+          <DropdownMenuItem className="cursor-pointer">Orders</DropdownMenuItem>
+        </Link>
         <DropdownMenuItem
           className="cursor-pointer flex items-center gap-2"
           onClick={handleLogout}

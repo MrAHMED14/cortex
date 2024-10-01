@@ -3,6 +3,7 @@ import { OrderProductWithQuantity, OrderWithProduct } from "@/lib/types/order"
 import { Button } from "../ui/button"
 
 import SecondaryButton from "../ui/secondary-button"
+import Link from "next/link"
 
 interface OrderHistoryListProps {
   orders: OrderWithProduct[]
@@ -39,12 +40,10 @@ export function HeadOrderHistoryDetails({
   )
 
   return (
-    <div className="border border-gray-200 shadow-sm bg-muted dark:border-stone-700 rounded-lg py-6 px-4 sm:px-6 sm:flex sm:items-center sm:justify-between sm:space-x-6 lg:space-x-8">
+    <div className="border border-neutral-200 bg-neutral-50 shadow-sm dark:border-stone-700 rounded-lg py-6 px-4 sm:px-6 sm:flex sm:items-center sm:justify-between sm:space-x-6 lg:space-x-8">
       <dl className="divide-y divide-gray-200 dark:divide-stone-700 space-y-6 text-sm flex-auto sm:divide-y-0 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-x-6 lg:w-1/2 lg:flex-none lg:gap-x-8">
         <div className="flex justify-between sm:block">
-          <dt className="font-medium text-gray-900 dark:text-white">
-            Date placed
-          </dt>
+          <dt className="font-medium dark:text-white">Date placed</dt>
           <dd className="sm:mt-1 text-muted-foreground">
             <time dateTime={formatteDate(order.createdAt)}>
               {formatteDate(order.createdAt)}
@@ -52,24 +51,19 @@ export function HeadOrderHistoryDetails({
           </dd>
         </div>
         <div className="flex justify-between pt-6 sm:block sm:pt-0">
-          <dt className="font-medium text-gray-900 dark:text-white">
-            Order status
-          </dt>
+          <dt className="font-medium dark:text-white">Order status</dt>
           <dd className="sm:mt-1 text-muted-foreground">
             Delivered {formatteDate(order.createdAt)}
           </dd>
         </div>
-        <div className="flex justify-between pt-6 font-medium text-gray-900 dark:text-white sm:block sm:pt-0">
+        <div className="flex justify-between pt-6 font-medium dark:text-white sm:block sm:pt-0">
           <dt>Total amount</dt>
           <dd className="sm:mt-1 text-muted-foreground">
             {formatUSD(formatFloatNumber(subtotal))}
           </dd>
         </div>
       </dl>
-      <SecondaryButton className="mt-2 sm:mt-0 sm:max-w-60">
-        View Invoice
-        <span className="sr-only">for order</span>
-      </SecondaryButton>
+      <Button>View Invoice</Button>
     </div>
   )
 }
@@ -80,7 +74,7 @@ export function OrderHistoryItems({ order }: { order: OrderWithProduct }) {
       <h1 className="text-sm text-muted-foreground font-normal mb-2">
         Orderd Products
       </h1>
-      <div className="w-full border border-gray-200 shadow-sm bg-muted dark:border-stone-700 rounded-lg">
+      <div className="w-full border border-neutral-200 bg-neutral-50 shadow-sm dark:border-stone-700 rounded-lg">
         {order.items.map((orderItem, index) => (
           <div className="w-full" key={orderItem.id}>
             <div className="w-full flex items-center justify-center">
@@ -123,7 +117,7 @@ export function OrderHistoryItem({
           className="w-16 h-16 object-center object-cover rounded"
         />
         <div>
-          <p className="md:max-w-80 max-w-60 line-clamp-3 font-medium text-gray-900 dark:text-white">
+          <p className="md:max-w-80 max-w-60 line-clamp-3 font-medium dark:text-white">
             {title}
           </p>
 
@@ -136,12 +130,9 @@ export function OrderHistoryItem({
       <p className="hidden sm:block text-muted-foreground">
         {formatUSD(price)}
       </p>
-      <Button
-        variant="ghost"
-        className="text-blue-500 font-medium text-right whitespace-nowrap hover:bg-blue-200 hover:text-blue-600"
-      >
-        View
-      </Button>
+      <Link href={`/shop/${slug}`}>
+        <Button variant="ghost">View</Button>
+      </Link>
     </div>
   )
 }

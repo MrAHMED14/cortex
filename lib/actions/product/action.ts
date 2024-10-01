@@ -75,7 +75,9 @@ export async function getsubCategories(categoryName?: string) {
 
 export async function getProductBySlug(slug: string) {
   try {
-    const productBySlug = await prisma.product.findUnique({ where: { slug } })
+    const productBySlug = await prisma.product.findUnique({
+      where: { slug, isPublish: true },
+    })
 
     revalidatePath("/shop/[slug]", "page")
     return productBySlug

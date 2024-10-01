@@ -7,9 +7,9 @@ interface LoadingProps {}
 export default function Loading({}: LoadingProps) {
   return (
     <MaxWidthWrapper>
-      <div className="py-24">
+      <div className="py-6 sm:py-24">
         <Title>Checkout</Title>
-        <p className="text-sm text-muted-foreground">
+        <p className="text-sm text-neutral-500">
           Check your order items, and provide your information to request the
           order.
         </p>

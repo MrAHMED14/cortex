@@ -9,7 +9,7 @@ interface ProductInfoProps {
 }
 
 export default function ProductInfo({
-  product: { id, title, price, description },
+  product: { id, title, price, description, stock },
 }: ProductInfoProps) {
   return (
     <div className="mt-10 sm:px-0 sm:mt-16 lg:mt-0">
@@ -34,14 +34,24 @@ export default function ProductInfo({
       </div>
 
       <div className="mt-6">
-        <div className="mt-10 flex items-center">
-          <AddToCart productId={id} />
+        {stock <= 5 && stock > 0 && (
+          <>
+            <span>Only {stock} are left in stock</span>
+          </>
+        )}
+        <div className="mt-10 flex items-center gap-4">
+          {stock === 0 ? (
+            <>
+              <span className="max-w-xs flex-1 bg-[#0f072b] rounded-md py-2 px-8 flex items-center justify-center gap-2 text-base font-medium text-white hover:bg-[#0f072b] sm:w-full">
+                out of stock
+              </span>
+            </>
+          ) : (
+            <AddToCart productId={id} stock={stock} />
+          )}
 
-          <button
-            type="button"
-            className="ml-4 py-3 px-3 rounded-md flex items-center justify-center text-gray-400 hover:bg-gray-100 hover:text-gray-500"
-          >
-            <HeartIcon className="size-6 hover:fill-gray-500" />
+          <button type="button" className="flex items-center justify-center">
+            <HeartIcon className="size-6 hover:fill-gray-500 text-gray-400 hover:bg-gray-100 hover:text-gray-500" />
             <span className="sr-only">Add to favorites</span>
           </button>
         </div>

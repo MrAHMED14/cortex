@@ -9,8 +9,10 @@ export async function incrementProductQuantity(productId: string) {
   const cart = (await getCart()) ?? (await createCart())
 
   const articleInCart = cart.items.find((item) => item.productId === productId)
-
   if (articleInCart) {
+    if (articleInCart.product.stock < articleInCart.quantity)
+      throw new Error("Insufficient stock")
+
     await prisma.cartItem.update({
       where: { id: articleInCart.id },
       data: { quantity: { increment: 1 } },
@@ -68,8 +70,13 @@ export async function deleteCartItem(productId: string) {
   }
 }
 
-export async function setProductQuantity(productId: string, quantity: number) {
+export async function setProductQuantity(
+  productId: string,
+  quantity: number,
+  stock: number
+) {
   if (typeof quantity !== "number") throw new Error("Incompatible type.")
+  if (stock < quantity) throw new Error("Insufficient stock")
 
   const cart = (await getCart()) ?? (await createCart())
 

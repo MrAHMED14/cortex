@@ -11,7 +11,7 @@ interface FilterProps {
 export default function Filter({ categories, subCategories }: FilterProps) {
   return (
     <div className="w-[240px] hidden lg:block">
-      <div className="sticky top-16 border w-full flex-col p-4 rounded-md shadow-sm">
+      <div className="sticky top-4 w-full flex-col p-0 rounded-md shadow-sm">
         <h1 className="font-bold text-lg">Filters</h1>
         <Suspense>
           <FilterOptions

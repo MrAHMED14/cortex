@@ -23,12 +23,12 @@ export default function ResetCart({ cartId }: ResetCartProps) {
       disabled={isPending}
       className="flex items-center gap-2 hover:bg-red-100 hover:text-red-500 text-red-500 transition-colors"
     >
-      Reset cart
       {isPending ? (
         <Loader2Icon className="animate-spin size-3" />
       ) : (
         <Trash2Icon className="size-4" />
       )}
+      Reset cart
     </Button>
   )
 }

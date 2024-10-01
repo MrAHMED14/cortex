@@ -84,6 +84,9 @@ model OrderItem {
   id       String @id @default(uuid())
   quantity Int
 
+  price         Float
+  discountPrice Float? // Optional field for the discounted price
+
   createdAt DateTime  @default(now())
   updatedAt DateTime? @updatedAt
 
@@ -134,12 +137,15 @@ model CartItem {
 }
 
 model Product {
-  id          String   @id @default(uuid())
-  title       String
-  description String?
-  price       Float
-  slug        String   @unique
-  img         String[]
+  id            String   @id @default(uuid())
+  title         String
+  description   String?
+  price         Float
+  discountPrice Float? // Optional field for the discounted price
+  slug          String   @unique
+  img           String[]
+  stock         Int      @default(0)
+  isPublish     Boolean  @default(true)
 
   createdAt DateTime  @default(now())
   updatedAt DateTime? @updatedAt

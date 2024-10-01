@@ -5,6 +5,7 @@ import { getCart } from "@/lib/actions/cart/lib"
 import EmptyCart from "./empty-cart"
 import ResetCart from "./reset-cart"
 import { formatFloatNumber, formatUSD } from "@/lib/utils"
+import { buttonVariants } from "../ui/button"
 
 interface CartListProps {}
 
@@ -30,37 +31,29 @@ export default async function CartList({}: CartListProps) {
           {/* Right */}
           <div className="mx-auto mt-6 min-[1114px]:max-w-4xl space-y-6 min-[1114px]:mt-0 w-full">
             {/* Order summary */}
-            <div className="space-y-4 rounded-lg border border-gray-200 p-4 shadow-sm bg-muted dark:border-stone-700 dark:bg-muted sm:p-6">
-              <p className="text-xl font-semibold text-gray-900 dark:text-white">
-                Summary
-              </p>
+            <div className="space-y-4 rounded-lg border border-neutral-200 p-4 bg-neutral-50 shadow-sm sm:p-6">
+              <p className="text-xl font-semibold dark:text-white">Summary</p>
 
               <div className="space-y-4">
                 <div className="space-y-2">
                   <dl className="flex items-center justify-between gap-4">
-                    <dt className="text-base font-normal text-gray-500 dark:text-gray-400">
-                      Original price
-                    </dt>
-                    <dd className="text-base font-medium text-gray-900 dark:text-white">
+                    <dt className="text-neutral-500">Original price</dt>
+                    <dd className="font-medium dark:text-white">
                       {formatUSD(formatFloatNumber(cart.subtotal))}
                     </dd>
                   </dl>
 
                   <dl className="flex items-center justify-between gap-4">
-                    <dt className="text-base font-normal text-gray-500 dark:text-gray-400">
-                      Savings
-                    </dt>
-                    <dd className="text-base font-medium text-green-600">
+                    <dt className="text-neutral-500">Savings</dt>
+                    <dd className="font-medium text-green-600">
                       -{formatUSD(formatFloatNumber(0.0))}
                     </dd>
                   </dl>
                 </div>
 
                 <dl className="flex items-center justify-between gap-4 border-t border-gray-200 pt-2 dark:border-gray-700">
-                  <dt className="text-base font-bold text-gray-900 dark:text-white">
-                    Total
-                  </dt>
-                  <dd className="text-base font-bold text-gray-900 dark:text-white">
+                  <dt className="font-bold dark:text-white">Total</dt>
+                  <dd className="font-bold dark:text-white">
                     {formatUSD(formatFloatNumber(cart.subtotal))}
                   </dd>
                 </dl>
@@ -68,18 +61,16 @@ export default async function CartList({}: CartListProps) {
 
               <Link
                 href="/checkout"
-                className="flex w-full items-center justify-center rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-700"
+                className={buttonVariants({ className: "w-full" })}
               >
                 Proceed to Checkout
               </Link>
 
               <div className="flex items-center justify-center gap-1">
-                <span className="text-sm font-normal text-gray-500 dark:text-gray-400">
-                  or
-                </span>
+                <span className="text-sm font-normal text-neutral-400">or</span>
                 <Link
                   href="/shop"
-                  className="inline-flex items-center gap-2 text-sm font-medium text-blue-600 hover:underline dark:text-blue-500"
+                  className="inline-flex items-center gap-2 text-sm font-medium text-neutral-400 hover:text-neutral-500 hover:underline"
                 >
                   continue shopping
                 </Link>

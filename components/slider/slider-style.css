@@ -1,0 +1,17 @@
+.embla {
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+}
+.embla__container {
+  display: flex;
+  flex-direction: row;
+  user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.embla__slide {
+  position: relative;
+  min-width: 100%;
+  flex: 0 0 100%;
+}

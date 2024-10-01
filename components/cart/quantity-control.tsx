@@ -4,15 +4,18 @@ import { ChangeEvent, useTransition } from "react"
 import { setProductQuantity } from "@/lib/actions/cart/action"
 
 import Select from "../ui/select"
+import { toast } from "sonner"
 
 interface QuantityControlProps {
   quantity: number
   productId: string
+  stock: number
 }
 
 export default function QuantityControl({
   quantity,
   productId,
+  stock,
 }: QuantityControlProps) {
   const [isPending, startTransition] = useTransition()
 
@@ -21,7 +24,12 @@ export default function QuantityControl({
     if (typeof value !== "number") throw new Error("Incompatible type.")
 
     startTransition(async () => {
-      await setProductQuantity(productId, value)
+      if (stock < value) {
+        toast.error("Insufficient stock")
+        return
+      } else {
+        await setProductQuantity(productId, value, stock)
+      }
     })
   }
 

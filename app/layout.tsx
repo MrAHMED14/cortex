@@ -8,6 +8,9 @@ import Footer from "@/components/footer/footer"
 import Navbar from "@/components/navbar/navbar"
 
 import "./globals.css"
+import ContactBar from "@/components/navbar/contact-bar"
+import SearchBar from "@/components/navbar/search-bar"
+import Up from "@/components/ui/up"
 
 export const inter = Inter({ subsets: ["latin"], display: "swap" })
 
@@ -24,19 +27,23 @@ export default async function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className="h-full" suppressHydrationWarning>
+    <html lang="en" className="h-full scroll-smooth" suppressHydrationWarning>
       <body
         className={cn("h-full antialiased", inter.className)}
         suppressHydrationWarning
       >
-        <Providers>
-          <main className="flex flex-col h-full min-h-screen">
-            <Navbar />
-            <div className="flex-grow flex-1 mt-14">{children}</div>
-            <Footer />
-          </main>
-          <Toaster position="top-center" richColors />
-        </Providers>
+        <ContactBar />
+        <SearchBar />
+        <Navbar />
+        <main className="flex flex-col h-full min-h-screen">
+          <div className="flex-grow flex-1">{children}</div>
+          <Footer />
+        </main>
+        <Toaster position="top-center" richColors />
+        <Up />
+        {/* <Providers>
+            Light & Dark Mode
+        </Providers> */}
       </body>
     </html>
   )

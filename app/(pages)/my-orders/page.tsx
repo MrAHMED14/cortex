@@ -18,10 +18,10 @@ export default async function MyOrdersPage({}: MyOrdersPageProps) {
   const userOrder = await getUserOrder(user.id)
 
   return (
-    <MaxWidthWrapper className="max-w-7xl">
-      <div className="py-24">
-        <Title>Order history</Title>
-        <p className="text-sm text-muted-foreground">
+    <MaxWidthWrapper>
+      <div className="py-6 sm:py-24">
+        <Title>Orders history</Title>
+        <p className="text-sm text-neutral-500">
           Check the status of recent orders, manage returns, and download
           invoices.
         </p>

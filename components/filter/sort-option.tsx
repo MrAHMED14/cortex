@@ -47,9 +47,8 @@ export default function SortOption({}: SortOptionProps) {
         <DropdownMenuTrigger
           disabled={isPending}
           className={buttonVariants({
-            className:
-              "flex items-center justify-center text-sm font-medium hover:bg-muted-foreground/40",
-            variant: "ghost",
+            className: "flex items-center justify-center text-sm font-medium",
+            variant: "outline",
           })}
         >
           Sort

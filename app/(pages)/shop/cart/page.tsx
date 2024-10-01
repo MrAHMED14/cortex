@@ -6,10 +6,10 @@ interface CartPageProps {}
 
 export default function CartPage({}: CartPageProps) {
   return (
-    <MaxWidthWrapper className="max-w-7xl">
-      <div className="py-24">
+    <MaxWidthWrapper>
+      <div className="py-6 sm:py-24">
         <Title>Shopping Cart</Title>
-        <p className="text-sm text-muted-foreground">
+        <p className="text-sm text-neutral-500">
           Change the quantity of products, remove products, reset your shopping
           cart, and proceed to checkout.
         </p>

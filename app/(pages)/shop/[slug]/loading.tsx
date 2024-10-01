@@ -4,8 +4,8 @@ interface LoadingProps {}
 
 export default function Loading({}: LoadingProps) {
   return (
-    <MaxWidthWrapper className="max-w-7xl">
-      <div className="py-24">
+    <MaxWidthWrapper>
+      <div className="py-6 sm:py-24">
         <div className="animate-pulse w-full sm:w-1/2 border border-gray-200 shadow-sm bg-muted dark:border-stone-700 rounded-lg h-7" />
 
         <div className="max-w-2xl mx-auto py-16 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">

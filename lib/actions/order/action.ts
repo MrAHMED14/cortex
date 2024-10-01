@@ -37,7 +37,7 @@ export async function createOrder(orderRequest: OrderRequest) {
       })
 
       // Create the order
-      await tx.order.create({
+      const createdOrder = await tx.order.create({
         data: {
           userId: user.id,
           addressId: addressRecord.id,
@@ -45,6 +45,8 @@ export async function createOrder(orderRequest: OrderRequest) {
             create: order.items.map((item) => ({
               productId: item.productId,
               quantity: item.quantity,
+              price: item.product.price,
+              discountPrice: item.product.discountPrice ?? null,
             })),
           },
         },
@@ -56,6 +58,35 @@ export async function createOrder(orderRequest: OrderRequest) {
           },
         },
       })
+
+      // Update stock for each product
+      for (const item of createdOrder.items) {
+        const product = await tx.product.findUnique({
+          where: { id: item.productId },
+          select: { stock: true },
+        })
+
+        if (!product) {
+          throw new Error(`Product with ID ${item.productId} not found`)
+        }
+
+        // Check if enough stock is available
+        if (product.stock < item.quantity) {
+          throw new Error(
+            `Insufficient stock for product ID ${item.product.title}`
+          )
+        }
+
+        // Update the stock
+        await tx.product.update({
+          where: { id: item.productId },
+          data: {
+            stock: {
+              decrement: item.quantity, // Reduce stock by the quantity ordered
+            },
+          },
+        })
+      }
 
       // Delete the cart
       const cartId = order.id

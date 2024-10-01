@@ -13,7 +13,7 @@ export default function SecondaryButton({
     <Button
       className={cn(
         className,
-        "flex w-full items-center gap-2 justify-center rounded-md bg-blue-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-700"
+        "flex w-full items-center gap-2 justify-center rounded-md bg-[#ff0000] px-5 py-2.5 text-sm font-medium text-white hover:bg-red-800 dark:hover:bg-red-700"
       )}
     >
       {children}

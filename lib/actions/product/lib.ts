@@ -29,6 +29,7 @@ export function prismaDynamicQuery({
     : {}
 
   const where: Prisma.ProductWhereInput | undefined = {
+    isPublish: true,
     AND: [
       searchFilter,
 

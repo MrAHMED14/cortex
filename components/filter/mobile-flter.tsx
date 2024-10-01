@@ -1,6 +1,7 @@
 import {
   Sheet,
   SheetContent,
+  SheetDescription,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
@@ -25,7 +26,10 @@ export function MobileFilter({ categories, subCategories }: MobileFilterProps) {
         </SheetTrigger>
         <SheetContent side="bottom">
           <SheetHeader>
-            <SheetTitle className="text-left">Filter</SheetTitle>
+            <SheetTitle className="text-left">Filters</SheetTitle>
+            <SheetDescription>
+              <span className="sr-only">this is the main filters</span>
+            </SheetDescription>
             <Suspense>
               <FilterOptions
                 categories={categories}

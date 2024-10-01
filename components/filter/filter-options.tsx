@@ -234,6 +234,7 @@ export default function FilterOptions({
       </div>
 
       <Button
+        variant={"ghost"}
         disabled={isPending}
         className="w-full mt-2 font-semibold"
         onClick={handleReset}
@@ -243,7 +244,7 @@ export default function FilterOptions({
             Loading <Loader2 className="h-4 w-4 animate-spin" />
           </span>
         ) : (
-          "Reset"
+          <span className="capitalize">reset</span>
         )}
       </Button>
     </div>
