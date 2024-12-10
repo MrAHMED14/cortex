@@ -25,7 +25,7 @@ export default function AddToCart({ productId, stock }: AddToCartProps) {
     })
   }
 
-  const quantityOptions: any[] = []
+  const quantityOptions: JSX.Element[] = []
   for (let i = 1; i <= 10; i++) {
     quantityOptions.push(
       <option key={i} value={i}>

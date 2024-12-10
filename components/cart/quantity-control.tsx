@@ -1,6 +1,6 @@
 "use client"
 
-import { ChangeEvent, useTransition } from "react"
+import { ChangeEvent, JSX, useTransition } from "react"
 import { setProductQuantity } from "@/lib/actions/cart/action"
 
 import Select from "../ui/select"
