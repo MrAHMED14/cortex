@@ -2,8 +2,7 @@ import MaxWidthWrapper from "@/components/global/max-width-wrapper"
 import OrderList from "@/components/order/order-list"
 import Title from "@/components/ui/title"
 
-interface CheckoutPageProps {}
-export default function CheckoutPage({}: CheckoutPageProps) {
+export default function CheckoutPage() {
   return (
     <MaxWidthWrapper>
       <div className="py-6 sm:py-24">

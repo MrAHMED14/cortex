@@ -3,21 +3,19 @@ import { Toaster } from "@/components/ui/sonner"
 import { Inter } from "next/font/google"
 import { cn } from "@/lib/utils"
 
-import Providers from "@/components/global/providers"
-import Footer from "@/components/footer/footer"
-import Navbar from "@/components/navbar/navbar"
-
-import "./globals.css"
 import ContactBar from "@/components/navbar/contact-bar"
 import SearchBar from "@/components/navbar/search-bar"
+import Navbar from "@/components/navbar/navbar"
+import Footer from "@/components/footer/footer"
 import Up from "@/components/ui/up"
+import "./globals.css"
 
 export const inter = Inter({ subsets: ["latin"], display: "swap" })
 
 // TODO:
 // Change the Metadata
 export const metadata: Metadata = {
-  title: "App",
+  title: "Cortex",
   description: "app",
 }
 
@@ -41,9 +39,6 @@ export default async function RootLayout({
         </main>
         <Toaster position="top-center" richColors />
         <Up />
-        {/* <Providers>
-            Light & Dark Mode
-        </Providers> */}
       </body>
     </html>
   )

@@ -4,9 +4,7 @@ import MaxWidthWrapper from "@/components/global/max-width-wrapper"
 import Title from "@/components/ui/title"
 import Link from "next/link"
 
-interface LoginPageProps {}
-
-export default function LoginPage({}: LoginPageProps) {
+export default function LoginPage() {
   return (
     <MaxWidthWrapper className="flex justify-center">
       <div className="py-24 flex flex-col items-center gap-y-6 w-60 sm:w-96">

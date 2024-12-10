@@ -2,9 +2,7 @@ import CartList from "@/components/cart/cart-list"
 import MaxWidthWrapper from "@/components/global/max-width-wrapper"
 import Title from "@/components/ui/title"
 
-interface CartPageProps {}
-
-export default function CartPage({}: CartPageProps) {
+export default function CartPage() {
   return (
     <MaxWidthWrapper>
       <div className="py-6 sm:py-24">

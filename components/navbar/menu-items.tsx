@@ -89,21 +89,10 @@ export function Menu({
         Shop
       </Link>
 
-      {/* <Link
-        href={"/my-pc"}
-        className={cn(
-          pathname === "/my-pc"
-            ? "text-primary font-bold"
-            : "hover:text-primary font-semibold text-neutral-700"
-        )}
-      >
-        Hot Deals
-      </Link> */}
-
       <Link
-        href={"/my-pc"}
+        href={"/blog"}
         className={cn(
-          pathname === "/my-pc"
+          pathname === "/blog"
             ? "text-primary font-bold"
             : "hover:text-primary font-semibold text-neutral-700"
         )}

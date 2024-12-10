@@ -20,7 +20,10 @@ export default function ProductPath({
     <Breadcrumb>
       <BreadcrumbList>
         <BreadcrumbItem>
-          <Link href="/" className="hover:dark:text-white hover:text-stone-950">
+          <Link
+            href="/"
+            className="hover:dark:text-white hover:text-stone-950 text-base"
+          >
             Home
           </Link>
         </BreadcrumbItem>
@@ -28,7 +31,7 @@ export default function ProductPath({
         <BreadcrumbItem>
           <Link
             href={`/shop?category=${category.toLowerCase()}`}
-            className="hover:dark:text-white hover:text-stone-950"
+            className="hover:dark:text-white hover:text-stone-950 text-base"
           >
             {capitalize(category)}
           </Link>
@@ -37,7 +40,7 @@ export default function ProductPath({
         <BreadcrumbItem>
           <Link
             href={`/shop?category=${category.toLowerCase()}&subcategory=${subcategory.toLowerCase()}`}
-            className="hover:dark:text-white hover:text-stone-950"
+            className="hover:dark:text-white hover:text-stone-950 text-base"
           >
             {capitalize(subcategory)}
           </Link>

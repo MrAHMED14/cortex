@@ -19,9 +19,7 @@ import { toast } from "sonner"
 import LoadingButton from "../ui/loading-button"
 import { PasswordInput } from "../ui/password-input"
 
-interface SignInFormProps {}
-
-export default function SignUpForm({}: SignInFormProps) {
+export default function SignUpForm() {
   const [isPending, startTransition] = useTransition()
 
   const form = useForm({

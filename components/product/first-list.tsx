@@ -18,9 +18,13 @@ export default async function ProductReels({
       {/* Products Reels */}
       {products && (
         <>
-          <div className="w-full grid grid-cols-1 sm:grid-cols-2 min-[960px]:grid-cols-3 min-[1310px]:grid-cols-4 place-items-center lg:place-items-end gap-y-10">
+          <div className="w-full grid grid-cols-1 sm:grid-cols-2 min-[960px]:grid-cols-3 min-[1310px]:grid-cols-4 place-items-center lg:place-items-end gap-y-10 max-[425px]:gap-y-20 max-[425px]:mt-5">
             {products.map((product) => (
-              <ProductCard key={product.id} product={product} />
+              <ProductCard
+                key={product.id}
+                product={product}
+                className="max-[425px]:scale-110"
+              />
             ))}
           </div>
           {products.length >= 1 &&

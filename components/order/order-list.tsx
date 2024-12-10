@@ -4,8 +4,7 @@ import { redirect } from "next/navigation"
 import EmptyCart from "../cart/empty-cart"
 import MakeOrder from "./make-order"
 
-interface OrderListProps {}
-export default async function OrderList({}: OrderListProps) {
+export default async function OrderList() {
   const cart = await getCart()
   const user = await getUser()
   if (!user) redirect("/login")

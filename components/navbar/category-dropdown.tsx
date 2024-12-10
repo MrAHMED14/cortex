@@ -12,9 +12,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
-interface CategoryDropdownProps {}
-
-export default function CategoryDropdown({}: CategoryDropdownProps) {
+export default function CategoryDropdown() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="focus-visible:border-hidden focus-within:border-hidden focus:border-hidden border-hidden">

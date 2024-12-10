@@ -1,9 +1,7 @@
 import MaxWidthWrapper from "@/components/global/max-width-wrapper"
 import Title from "@/components/ui/title"
 
-interface ContactPageProps {}
-
-export default function ContactPage({}: ContactPageProps) {
+export default function ContactPage() {
   return (
     <MaxWidthWrapper className="max-w-7xl">
       <div className="py-24">

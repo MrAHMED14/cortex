@@ -29,7 +29,7 @@ export default function ProductCard({
         <div className="w-full h-full flex items-center justify-center pt-3">
           {/* Image */}
           <Image
-            src={"/001.webp"}
+            src={"/product-images/product-8.jpg"}
             width={150}
             height={150}
             alt={`img`}

@@ -7,9 +7,7 @@ import ResetCart from "./reset-cart"
 import { formatFloatNumber, formatUSD } from "@/lib/utils"
 import { buttonVariants } from "../ui/button"
 
-interface CartListProps {}
-
-export default async function CartList({}: CartListProps) {
+export default async function CartList() {
   const cart = await getCart()
 
   return (

@@ -4,10 +4,6 @@ import MenuItems, {
   Menu,
   UserAvatar,
 } from "@/components/navbar/menu-items"
-import { getCart } from "@/lib/actions/cart/lib"
-import { getUser } from "@/lib/actions/auth/action"
-import CategoryDropdown from "./category-dropdown"
-import ThemeSwitcher from "../global/theme-switcher"
 import {
   Sheet,
   SheetContent,
@@ -17,15 +13,16 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet"
 import { MenuIcon } from "lucide-react"
-import Search from "../filter/search"
+import { getUser } from "@/lib/actions/auth/action"
+import { getCart } from "@/lib/actions/cart/lib"
 import { cn } from "@/lib/utils"
-import Link from "next/link"
-import MainNavbar from "./main-navbar"
+
+import CategoryDropdown from "./category-dropdown"
+import Search from "../filter/search"
 import Image from "next/image"
+import Link from "next/link"
 
-interface NavbarProps {}
-
-export default async function Navbar({}: NavbarProps) {
+export default async function Navbar() {
   const user = await getUser()
   const cart = await getCart()
 

@@ -7,9 +7,7 @@ import MaxWidthWrapper from "@/components/global/max-width-wrapper"
 import Title from "@/components/ui/title"
 import { getUser } from "@/lib/actions/auth/action"
 
-interface MyOrdersPageProps {}
-
-export default async function MyOrdersPage({}: MyOrdersPageProps) {
+export default async function MyOrdersPage() {
   const user = await getUser()
   if (!user) {
     redirect("/login")

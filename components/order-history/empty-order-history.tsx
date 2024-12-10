@@ -1,8 +1,6 @@
 import Link from "next/link"
 
-interface EmptyOrderHistoryProps {}
-
-export default function EmptyOrderHistory({}: EmptyOrderHistoryProps) {
+export default function EmptyOrderHistory() {
   return (
     <div className="w-full flex flex-col items-center justify-center mt-10 gap-3">
       <div className="w-full md:w-[65%] h-56 flex items-center justify-center rounded-lg border border-neutral-200 bg-neutral-50 shadow-sm">

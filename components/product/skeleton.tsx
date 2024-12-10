@@ -1,5 +1,4 @@
-interface ProductSkeletonProps {}
-export default function ProductSkeleton({}: ProductSkeletonProps) {
+export default function ProductSkeleton() {
   return (
     <div className="flex flex-col items-start animate-pulse">
       <div className="h-[230px] p-6 w-full">

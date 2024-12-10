@@ -1,12 +1,11 @@
-import Link from "next/link"
-import Search from "../filter/search"
-import { FaSearch, FaShoppingCart } from "react-icons/fa"
+import { FaShoppingCart } from "react-icons/fa"
 import { getCart } from "@/lib/actions/cart/lib"
+
+import Search from "../filter/search"
 import Image from "next/image"
+import Link from "next/link"
 
-interface SearchBarProps {}
-
-export default async function SearchBar({}: SearchBarProps) {
+export default async function SearchBar() {
   const cart = await getCart()
 
   return (

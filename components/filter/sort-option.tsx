@@ -11,15 +11,13 @@ import { useRouter, useSearchParams } from "next/navigation"
 import { Button, buttonVariants } from "../ui/button"
 import { cn } from "@/lib/utils"
 
-interface SortOptionProps {}
-
 const SORT_OPTIONS = [
   { name: "None", value: "" },
   { name: "Price: Low to High", value: "price-asc" },
   { name: "Price: High to Low", value: "price-desc" },
 ] as const
 
-export default function SortOption({}: SortOptionProps) {
+export default function SortOption() {
   const router = useRouter()
   const searchParams = useSearchParams()!
   const [isPending, startTransition] = useTransition()

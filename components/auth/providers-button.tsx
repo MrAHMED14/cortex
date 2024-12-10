@@ -2,8 +2,7 @@ import Link from "next/link"
 import { Button, buttonVariants } from "../ui/button"
 import { GithubIcon, GoogleIcon } from "../ui/icons"
 
-interface ProvidersButtonsProps {}
-export default function ProvidersButtons({}: ProvidersButtonsProps) {
+export default function ProvidersButtons() {
   return (
     <div className="w-full space-y-2">
       <Button

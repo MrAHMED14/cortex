@@ -7,8 +7,7 @@ import MaxWidthWrapper from "@/components/global/max-width-wrapper"
 import Title from "@/components/ui/title"
 import Link from "next/link"
 
-interface ErrorProps {}
-export default function Error({}: ErrorProps) {
+export default function Error() {
   return (
     <MaxWidthWrapper>
       <div className="py-24 flex flex-col items-center justify-center">

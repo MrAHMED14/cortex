@@ -20,9 +20,7 @@ import { login } from "@/lib/actions/auth/login/action"
 import LoadingButton from "../ui/loading-button"
 import { useTransition } from "react"
 
-interface LoginFormProps {}
-
-export default function LoginForm({}: LoginFormProps) {
+export default function LoginForm() {
   const [isPending, startTransition] = useTransition()
 
   const form = useForm({

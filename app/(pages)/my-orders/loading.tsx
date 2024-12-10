@@ -1,9 +1,7 @@
 import MaxWidthWrapper from "@/components/global/max-width-wrapper"
 import Title from "@/components/ui/title"
 
-interface LoadingProps {}
-
-export default function Loading({}: LoadingProps) {
+export default function Loading() {
   return (
     <MaxWidthWrapper>
       <div className="py-6 sm:py-24">

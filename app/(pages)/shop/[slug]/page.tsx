@@ -7,6 +7,7 @@ import ProductInfo from "@/components/product/product-details/info"
 import ProductCard from "@/components/product/card"
 import Title from "@/components/ui/title"
 import Link from "next/link"
+import { buttonVariants } from "@/components/ui/button"
 
 const TEST = {
   id: "1",
@@ -49,31 +50,22 @@ export default async function ProductDetailsPage({
           </div>
         </div>
 
-        <div className="w-full flex flex-col min-[430px]:flex-row min-[430px]:justify-between min-[430px]:items-center">
-          <Title>Popular Products</Title>
-          <Link
-            href="#"
-            className="px-4 py-2 bg-[#ff0000] text-white font-medium rounded-md text-center"
-          >
-            view more
-          </Link>
-        </div>
-
-        <div className="w-full mt-11 flex items-center justify-center">
-          <div className="w-full flex flex-col mb-20">
-            <div className="w-full grid grid-cols-1 sm:grid-cols-2 min-[960px]:grid-cols-3 min-[1310px]:grid-cols-4 place-items-center gap-y-20">
-              {Array(4)
-                .fill(4)
-                .map((_, index) => (
-                  <ProductCard
-                    key={index}
-                    product={TEST}
-                    className="scale-110 sm:hover:scale-[1.15]"
-                  />
-                ))}
-            </div>
+        <section>
+          <div className="w-full flex flex-col min-[430px]:flex-row min-[430px]:justify-between min-[430px]:items-center">
+            <Title>Related Products</Title>
+            <Link href="#" className={buttonVariants({})}>
+              view more
+            </Link>
           </div>
-        </div>
+
+          <div className="mt-8 w-full grid grid-cols-1 sm:grid-cols-2 min-[890px]:grid-cols-3 min-[1190px]:grid-cols-4 min-[1360px]:grid-cols-5 place-items-center gap-10">
+            {Array(5)
+              .fill(5)
+              .map((_, index) => (
+                <ProductCard key={index} product={TEST} />
+              ))}
+          </div>
+        </section>
       </div>
     </MaxWidthWrapper>
   )

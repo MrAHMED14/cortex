@@ -1,11 +1,8 @@
 "use client"
 
-import {
-  incrementProductQuantity,
-  setProductQuantity,
-} from "@/lib/actions/cart/action"
+import { setProductQuantity } from "@/lib/actions/cart/action"
 import { Loader2Icon, ShoppingBagIcon } from "lucide-react"
-import { useState, useTransition } from "react"
+import { JSX, useState, useTransition } from "react"
 import { toast } from "sonner"
 import Select from "../ui/select"
 
@@ -28,7 +25,7 @@ export default function AddToCart({ productId, stock }: AddToCartProps) {
     })
   }
 
-  const quantityOptions: JSX.Element[] = []
+  const quantityOptions: any[] = []
   for (let i = 1; i <= 10; i++) {
     quantityOptions.push(
       <option key={i} value={i}>

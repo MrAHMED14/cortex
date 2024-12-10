@@ -1,4 +1,3 @@
-interface HomeProductReelsProps {}
-export default function HomeProductReels({}: HomeProductReelsProps) {
+export default function HomeProductReels() {
   return <div>HomeProductReels</div>
 }
