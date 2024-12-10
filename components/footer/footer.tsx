@@ -13,6 +13,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
           {/* LOGO & Description */}
           <div className="sm:block flex flex-col items-center">
+            <span className="sr-only">cortex</span>
             <Image
               src="/cortex-svg.svg"
               width={200}

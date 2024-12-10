@@ -30,6 +30,7 @@ export default function Up({}: UpProps) {
           onClick={goToTop}
           className="p-3 rounded-sm text-center bg-primary text-primary-foreground shadow hover:bg-primary/90"
         >
+          <span className="sr-only">up</span>
           <ChevronUp className="text-white size-4" />
         </button>
       )}

@@ -34,6 +34,7 @@ export default async function Navbar() {
           <div className="w-full flex items-center justify-start">
             <CategoryDropdown />
             <Link className="flex lg:hidden" href="/">
+              <span className="sr-only">cortex</span>
               <Image
                 src="./cortex-svg.svg"
                 width={200}
