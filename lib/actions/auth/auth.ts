@@ -46,8 +46,8 @@ interface DatabaseUserAttributes {
 export const google = new Google(
   process.env.GOOGLE_CLIENT_ID!,
   process.env.GOOGLE_CLIENT_SECRET!,
-  `http://localhost:3000/api/auth/callback/google`
-  // `https://cortex-store.vercel.app/api/auth/callback/google`
+  // `http://localhost:3000/api/auth/callback/google`
+  `https://cortex-store.vercel.app/api/auth/callback/google`
 )
 
 export const validateRequest = async (): Promise<
