@@ -36,7 +36,7 @@ export default async function Navbar() {
             <Link className="flex lg:hidden" href="/">
               <span className="sr-only">cortex</span>
               <Image
-                src="./cortex-svg.svg"
+                src="./cortex-black.svg"
                 width={200}
                 height={100}
                 alt="cortex"

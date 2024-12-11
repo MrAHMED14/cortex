@@ -15,7 +15,7 @@ export default function Footer() {
           <div className="sm:block flex flex-col items-center">
             <span className="sr-only">cortex</span>
             <Image
-              src="/cortex-svg.svg"
+              src="/cortex-black.svg"
               width={200}
               height={100}
               alt="cortex"

@@ -13,7 +13,7 @@ export default async function SearchBar() {
       <div className="w-36">
         <Link href="/" className="">
           <Image
-            src="./cortex-svg.svg"
+            src="./cortex-black.svg"
             width={200}
             height={100}
             alt="cortex"
