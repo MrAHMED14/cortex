@@ -49,6 +49,7 @@ interface ProductRequest {
   slug?: string
   price: number
   stock: number
+  description: string
   seuil: number
   isPublish: boolean
   subCategory: string

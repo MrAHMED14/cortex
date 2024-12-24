@@ -26,6 +26,7 @@ import { toast } from "sonner"
 import { v4 as uuidv4 } from "uuid"
 import { z } from "zod"
 import { Switch } from "../ui/switch"
+import { Textarea } from "../ui/textarea"
 
 type FileWithPreview = File & {
   preview: string
@@ -56,6 +57,7 @@ export default function AddNewProduct({
     stock: z.number().min(0),
 
     seuil: z.number().min(0),
+    description: z.string().min(10),
 
     discountPercentage: z.number().min(0).max(100).optional(),
 
@@ -207,6 +209,7 @@ export default function AddNewProduct({
       price: 0,
       stock: 0,
       seuil: 0,
+      description: "",
       subCategory: "",
       discountPercentage: 0,
       isPublish: true,
@@ -245,6 +248,7 @@ export default function AddNewProduct({
         price: values.price,
         stock: values.stock,
         seuil: values.seuil,
+        description: values.description,
         isPublish: values.isPublish,
         subCategory: values.subCategory,
         discountPrice,
@@ -281,6 +285,27 @@ export default function AddNewProduct({
                         aria-describedby="title-error"
                         disabled={isPending}
                         placeholder="Enter product title here"
+                      />
+                    </FormControl>
+                    <FormMessage id="title-error" />
+                  </FormItem>
+                )}
+              />
+
+              {/* Description Input */}
+              <FormField
+                control={form.control}
+                name="description"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>
+                      Description <span className="text-red-500">*</span>
+                    </FormLabel>
+                    <FormControl>
+                      <Textarea
+                        {...field}
+                        disabled={isPending}
+                        placeholder="Enter product description here"
                       />
                     </FormControl>
                     <FormMessage id="title-error" />
@@ -455,6 +480,7 @@ export default function AddNewProduct({
                     </div>
                     <FormControl>
                       <Switch
+                        disabled={isPending}
                         checked={field.value}
                         onCheckedChange={field.onChange}
                       />

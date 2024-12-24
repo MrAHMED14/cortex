@@ -28,6 +28,7 @@ import { v4 as uuidv4 } from "uuid"
 import { z } from "zod"
 import { useRouter } from "next/navigation"
 import { Switch } from "../ui/switch"
+import { Textarea } from "../ui/textarea"
 
 interface EditProductProps {
   product: Product
@@ -51,6 +52,7 @@ export default function EditProduct({
     id,
     title,
     price,
+    description,
     img,
     stock,
     OrderThreshold,
@@ -74,6 +76,8 @@ export default function EditProduct({
     price: z.number().min(1).positive(),
 
     discountPercentage: z.number().min(0).max(100).optional(),
+
+    description: z.string().min(10),
 
     isPublish: z.boolean().default(isPublish),
 
@@ -240,6 +244,7 @@ export default function EditProduct({
       stock,
       seuil: OrderThreshold,
       isPublish,
+      description: description ?? "",
       subcategory,
       discountPercentage: discountPrice
         ? ((price - discountPrice) / price) * 100
@@ -276,6 +281,7 @@ export default function EditProduct({
           stock: values.stock,
           isPublish: values.isPublish,
           subCategory: values.subcategory,
+          description: values.description,
           seuil: values.seuil,
           discountPrice,
           imgUrls: mergedImgs,
@@ -312,6 +318,27 @@ export default function EditProduct({
                         aria-describedby="title-error"
                         disabled={isPending}
                         placeholder="Enter product title here"
+                      />
+                    </FormControl>
+                    <FormMessage id="title-error" />
+                  </FormItem>
+                )}
+              />
+
+              {/* Description Input */}
+              <FormField
+                control={form.control}
+                name="description"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>
+                      Description <span className="text-red-500">*</span>
+                    </FormLabel>
+                    <FormControl>
+                      <Textarea
+                        {...field}
+                        disabled={isPending}
+                        placeholder="Enter product description here"
                       />
                     </FormControl>
                     <FormMessage id="title-error" />
@@ -470,6 +497,7 @@ export default function EditProduct({
                     </div>
                     <FormControl>
                       <Switch
+                        disabled={isPending}
                         checked={field.value}
                         onCheckedChange={field.onChange}
                       />
