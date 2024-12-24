@@ -18,12 +18,13 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet"
 import {
+  CircleUser,
   Loader2Icon,
   LogOutIcon,
   MenuIcon,
   UserCircle2Icon,
 } from "lucide-react"
-import { buttonVariants } from "../ui/button"
+import { Button, buttonVariants } from "../ui/button"
 import { useTransition } from "react"
 import { usePathname } from "next/navigation"
 import { logout } from "@/lib/actions/auth/action"
@@ -153,37 +154,36 @@ export function UserAvatar({ username, imgUrl }: UserAvatarProps) {
   }
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger>
-        <div className="w-9 h-9 aspect-square object-center">
-          {imgUrl ? (
-            <Image
-              src={imgUrl}
-              alt={"user_img"}
-              width={500}
-              height={500}
-              className="object-cover w-full h-full rounded-full"
-            />
-          ) : (
-            <img
-              src="https://api.dicebear.com/9.x/notionists/svg"
-              alt="avatar"
-              className="object-cover w-full h-full rounded-full bg-blue-500 shrink-0 "
-            />
-
-            // <div className="dark:bg-white bg-stone-950/90 w-9 h-9 rounded-full aspect-square object-center flex items-center justify-center">
-            //   <UserCircle2Icon className="dark:text-stone-950/70 text-white/90" />
-            // </div>
-          )}
-        </div>
+      <DropdownMenuTrigger asChild>
+        <Button variant="ghost" size="icon" className="rounded-full">
+          <div className="w-9 h-9 aspect-square object-center">
+            {imgUrl ? (
+              <Image
+                src={imgUrl}
+                alt="user_img"
+                width={100}
+                height={100}
+                className="object-cover w-full h-full rounded-full"
+              />
+            ) : (
+              <img
+                src="https://api.dicebear.com/9.x/notionists/svg"
+                alt="avatar"
+                className="object-cover w-full h-full rounded-full bg-blue-500 shrink-0 "
+              />
+            )}
+          </div>
+        </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="mr-7">
-        <DropdownMenuLabel>
-          <span>{username ?? "Username"}</span>
-          <br />
-          <span className="text-neutral-500 text-xs">chikhaoui@ahmed.dev</span>
-        </DropdownMenuLabel>
+      <DropdownMenuContent align="end">
+        <DropdownMenuLabel>{username}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <Link href="/my-orders">
+          <DropdownMenuItem className="cursor-pointer">
+            My Account
+          </DropdownMenuItem>
+        </Link>
+        <Link href="#">
           <DropdownMenuItem className="cursor-pointer">Orders</DropdownMenuItem>
         </Link>
         <DropdownMenuItem

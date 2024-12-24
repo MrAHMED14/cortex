@@ -11,18 +11,21 @@ export default async function SearchBar() {
   return (
     <div className="hidden lg:flex items-center justify-between font-bold h-16 px-10">
       <div className="w-36">
-        <Link href="/" className="">
+        <Link href="/" className="hidden lg:flex">
+          <span className="sr-only">cortex</span>
+
           <Image
-            src="./cortex-black.svg"
+            src="/cortex-black.svg"
             width={200}
             height={100}
             alt="cortex"
             className="h-5 w-fit"
+            priority
           />
         </Link>
       </div>
 
-      <Search />
+      <Search path="/shop" name="products" />
 
       <div className="flex items-center justify-end w-36">
         <div className="flex items-center gap-3 text-xl">

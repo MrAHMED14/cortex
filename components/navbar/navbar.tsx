@@ -36,11 +36,12 @@ export default async function Navbar() {
             <Link className="flex lg:hidden" href="/">
               <span className="sr-only">cortex</span>
               <Image
-                src="./cortex-black.svg"
+                src="/cortex-black.svg"
                 width={200}
                 height={100}
                 alt="cortex"
                 className="h-5 w-fit"
+                priority
               />
             </Link>
           </div>
@@ -83,7 +84,11 @@ export default async function Navbar() {
                     <SheetDescription>
                       <span className="sr-only">this is the main menu</span>
                     </SheetDescription>
-                    <Search className="sm:hidden flex" />
+                    <Search
+                      path="/shop"
+                      name="products"
+                      className="sm:hidden flex"
+                    />
                   </SheetHeader>
                   <Menu
                     className="flex flex-col items-start gap-y-5"

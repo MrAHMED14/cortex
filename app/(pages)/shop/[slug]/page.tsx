@@ -8,6 +8,7 @@ import ProductCard from "@/components/product/card"
 import Title from "@/components/ui/title"
 import Link from "next/link"
 import { buttonVariants } from "@/components/ui/button"
+import { Product } from "@prisma/client"
 
 const TEST = {
   id: "1",
@@ -18,11 +19,12 @@ const TEST = {
   slug: "xiaomi-redmi-note-11-pro",
   img: ["string"],
   stock: 10,
+  OrderThreshold: 5,
   createdAt: new Date(),
   updatedAt: null,
   isPublish: true,
   subcategoryId: "string",
-}
+} as Product
 
 interface ProductDetailsPageProps {
   params: { slug: string }
@@ -34,6 +36,10 @@ export default async function ProductDetailsPage({
   const product = await getProductBySlug(slug)
 
   if (!product) {
+    return notFound()
+  }
+
+  if (!product.isPublish) {
     return notFound()
   }
 

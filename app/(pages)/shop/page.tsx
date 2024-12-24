@@ -61,6 +61,7 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
   let filter: ProductFilterValues = {
     query: search,
     category,
+    published: "true",
     subCategory,
     selectedOrder,
     price,

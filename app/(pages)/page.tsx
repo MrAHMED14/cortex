@@ -22,7 +22,7 @@ const TEST = {
   subcategoryId: "string",
 } as Product
 
-export default function Home() {
+export default async function Home() {
   const imgURL = [
     { link: "#", url: "/slider/500.jpg" },
     { link: "#", url: "/slider/900.jpg" },

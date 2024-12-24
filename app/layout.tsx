@@ -3,14 +3,9 @@ import { Toaster } from "@/components/ui/sonner"
 import { Inter } from "next/font/google"
 import { cn } from "@/lib/utils"
 
-import ContactBar from "@/components/navbar/contact-bar"
-import SearchBar from "@/components/navbar/search-bar"
-import Navbar from "@/components/navbar/navbar"
-import Footer from "@/components/footer/footer"
-import Up from "@/components/ui/up"
 import "./globals.css"
 
-export const inter = Inter({ subsets: ["latin"], display: "swap" })
+const inter = Inter({ subsets: ["latin"], display: "swap" })
 
 // TODO:
 // Change the Metadata
@@ -30,15 +25,8 @@ export default async function RootLayout({
         className={cn("h-full antialiased", inter.className)}
         suppressHydrationWarning
       >
-        <ContactBar />
-        <SearchBar />
-        <Navbar />
-        <main className="flex flex-col h-full min-h-screen">
-          <div className="flex-grow flex-1">{children}</div>
-          <Footer />
-        </main>
+        {children}
         <Toaster position="top-center" richColors />
-        <Up />
       </body>
     </html>
   )
