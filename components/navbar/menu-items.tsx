@@ -9,30 +9,14 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet"
-import {
-  CircleUser,
-  Loader2Icon,
-  LogOutIcon,
-  MenuIcon,
-  UserCircle2Icon,
-} from "lucide-react"
-import { Button, buttonVariants } from "../ui/button"
-import { useTransition } from "react"
-import { usePathname } from "next/navigation"
 import { logout } from "@/lib/actions/auth/action"
-import { User } from "lucia"
 import { cn } from "@/lib/utils"
+import { User } from "lucia"
+import { Loader2Icon, LogOutIcon } from "lucide-react"
+import { usePathname } from "next/navigation"
+import { useTransition } from "react"
+import { Button, buttonVariants } from "../ui/button"
 
-import ThemeSwitcher from "../global/theme-switcher"
-import Search from "../filter/search"
 import Image from "next/image"
 import Link from "next/link"
 
@@ -53,6 +37,7 @@ export default function MenuItems({
       <Menu
         className="hidden min-[1140px]:flex items-center gap-8"
         cartSize={cartSize}
+        user={user}
       />
     </div>
   )
@@ -61,56 +46,56 @@ export default function MenuItems({
 export function Menu({
   className,
   cartSize,
+  user,
 }: {
   className: string
   cartSize: number
+  user: User | null
 }) {
+  const links = [
+    {
+      name: "Home",
+      href: "/",
+    },
+    {
+      name: "Shop",
+      href: "/shop",
+    },
+    {
+      name: "Blog",
+      href: "/blog",
+    },
+    {
+      name: `Cart (${cartSize})`,
+      href: "/shop/cart",
+    },
+    {
+      name: "Contact",
+      href: "/contact",
+    },
+    {
+      name: "Dashboard",
+      href: "/dashboard",
+    },
+  ]
   const pathname = usePathname()
   return (
     <div className={cn(className)}>
-      <Link
-        href={"/"}
-        className={cn(
-          pathname === "/"
-            ? "text-primary font-bold"
-            : "hover:text-primary font-semibold text-neutral-700"
-        )}
-      >
-        Home
-      </Link>
-
-      <Link
-        href={"/shop"}
-        className={cn(
-          pathname === "/shop"
-            ? "text-primary font-bold"
-            : "hover:text-primary font-semibold text-neutral-700"
-        )}
-      >
-        Shop
-      </Link>
-
-      <Link
-        href={"/blog"}
-        className={cn(
-          pathname === "/blog"
-            ? "text-primary font-bold"
-            : "hover:text-primary font-semibold text-neutral-700"
-        )}
-      >
-        Blog
-      </Link>
-
-      <Link
-        href={"/contact"}
-        className={cn(
-          pathname === "/contact"
-            ? "text-primary font-bold"
-            : "hover:text-primary font-semibold text-neutral-700"
-        )}
-      >
-        Contact
-      </Link>
+      {links.map((link) => (
+        <Link
+          key={link.href}
+          href={link.href}
+          className={cn(
+            link.href === "/shop/cart" && "min-[1140px]:hidden",
+            link.href === "/dashboard" && user?.role !== "ADMIN" && "hidden",
+            link.href === pathname
+              ? "text-primary font-bold"
+              : "hover:text-primary font-semibold text-neutral-700"
+          )}
+        >
+          {link.name}
+        </Link>
+      ))}
     </div>
   )
 }

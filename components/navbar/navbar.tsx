@@ -93,6 +93,7 @@ export default async function Navbar() {
                   <Menu
                     className="flex flex-col items-start gap-y-5"
                     cartSize={cart?.size ?? 0}
+                    user={user}
                   />
                   {!user && <AuthButton className="min-[375px]:hidden flex" />}
                 </SheetContent>
