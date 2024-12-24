@@ -32,6 +32,7 @@ export default async function ProductReels({
             filterValues.pagination &&
             filterValues.pagination.totalPages > 1 && (
               <ProductPagination
+                path="/shop"
                 currentPage={filterValues.pagination.currentPage}
                 totalPages={filterValues.pagination.totalPages}
               />

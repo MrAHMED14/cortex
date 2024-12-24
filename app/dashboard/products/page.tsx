@@ -32,7 +32,6 @@ import {
 import Image from "next/image"
 import Link from "next/link"
 import { countProducts, getAllProducts } from "@/lib/actions/product/action"
-import ProductPagination from "@/components/dashboard/pagination"
 import { ProductFilterValues } from "@/lib/types/product"
 import { Prisma } from "@prisma/client"
 import { Badge } from "@/components/ui/badge"
@@ -41,6 +40,7 @@ import Search from "@/components/filter/search"
 import IsPublishedFilter from "@/components/filter/published-filter"
 import SortOptionDashboard from "@/components/filter/sort-option-dashboard"
 import { MobileFilterDashboard } from "@/components/filter/mobile-flter-dashboard"
+import ProductPagination from "@/components/product/pagination"
 
 interface ProductsRouteProps {
   searchParams: { [key: string]: string | string[] | undefined }
@@ -271,6 +271,7 @@ export default async function ProductsRoute({
               filter.pagination &&
               filter.pagination.totalPages > 1 && (
                 <ProductPagination
+                  path="/dashboard/products"
                   currentPage={filter.pagination.currentPage}
                   totalPages={filter.pagination.totalPages}
                 />

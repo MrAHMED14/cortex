@@ -14,11 +14,13 @@ import { cn } from "@/lib/utils"
 interface ProductPaginationProps {
   currentPage: number
   totalPages: number
+  path: string
 }
 
 export default function ProductPagination({
   currentPage,
   totalPages,
+  path,
 }: ProductPaginationProps) {
   const [isPending, startTransition] = useTransition()
   const searchParams = useSearchParams()
@@ -40,10 +42,10 @@ export default function ProductPagination({
   const updateRoute = useCallback(
     (queryString: string) => {
       startTransition(() => {
-        router.push(`/shop?${queryString}`, { scroll: true })
+        router.push(`${path}?${queryString}`, { scroll: true })
       })
     },
-    [router]
+    [path, router]
   )
 
   const handlePageChange = useCallback(
