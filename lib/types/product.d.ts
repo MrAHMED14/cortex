@@ -2,6 +2,8 @@ import { Prisma } from "@prisma/client"
 
 export interface ProductFilterValues {
   query?: string
+  status?: string
+  published?: string
   category?: string
   subCategory?: string
   price?: {
@@ -19,4 +21,37 @@ export interface ProductFilterValues {
     skip: number
     take: number
   }
+}
+
+export interface CategoryFilterValues {
+  query?: string
+  pagination?: {
+    currentPage: number
+    totalPages: number
+    skip: number
+    take: number
+  }
+}
+
+export interface SubcategoryFilterValues {
+  query?: string
+  category?: string
+  pagination?: {
+    currentPage: number
+    totalPages: number
+    skip: number
+    take: number
+  }
+}
+
+interface ProductRequest {
+  title: string
+  slug?: string
+  price: number
+  stock: number
+  seuil: number
+  isPublish: boolean
+  subCategory: string
+  discountPrice: number | null
+  imgUrls: string[]
 }

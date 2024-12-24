@@ -32,7 +32,7 @@ model User {
   createdAt DateTime  @default(now())
   updatedAt DateTime? @updatedAt
 
-  // @@map("users")
+  @@map("users")
 }
 
 model Session {
@@ -42,7 +42,7 @@ model Session {
   userId String
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  // @@map("sessions")
+  @@map("sessions")
 }
 
 model Address {
@@ -53,12 +53,12 @@ model Address {
   updatedAt DateTime? @updatedAt
 
   userId String
-  user   User   @relation(fields: [userId], references: [id])
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   orders Order[]
-  // @@map("addresses")
 
   @@index([userId])
+  @@map("addresses")
 }
 
 model Order {
@@ -72,12 +72,12 @@ model Order {
   address   Address @relation(fields: [addressId], references: [id])
 
   userId String
-  user   User   @relation(fields: [userId], references: [id])
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   items OrderItem[]
-  // @@map("orders")
 
   @@index([userId])
+  @@map("orders")
 }
 
 model OrderItem {
@@ -85,21 +85,21 @@ model OrderItem {
   quantity Int
 
   price         Float
-  discountPrice Float? // Optional field for the discounted price
+  discountPrice Float?
 
   createdAt DateTime  @default(now())
   updatedAt DateTime? @updatedAt
 
   orderId String
-  order   Order  @relation(fields: [orderId], references: [id])
+  order   Order  @relation(fields: [orderId], references: [id], onDelete: Cascade)
 
   productId String
-  product   Product @relation(fields: [productId], references: [id])
-  // @@map("orders_items")
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
 
   @@unique([orderId, productId])
   @@index([orderId])
   @@index([productId])
+  @@map("orders_items")
 }
 
 model Cart {
@@ -113,7 +113,7 @@ model Cart {
 
   items CartItem[]
 
-  // @@map("carts")
+  @@map("carts")
 }
 
 model CartItem {
@@ -129,23 +129,23 @@ model CartItem {
   productId String
   product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
 
-  // @@map("carts_items")
-
   @@unique([cartId, productId])
   @@index([cartId])
   @@index([productId])
+  @@map("carts_items")
 }
 
 model Product {
-  id            String   @id @default(uuid())
-  title         String
-  description   String?
-  price         Float
-  discountPrice Float? // Optional field for the discounted price
-  slug          String   @unique
-  img           String[]
-  stock         Int      @default(0)
-  isPublish     Boolean  @default(true)
+  id             String   @id @default(uuid())
+  title          String
+  description    String?
+  price          Float
+  discountPrice  Float?
+  slug           String   @unique
+  img            String[]
+  stock          Int      @default(0)
+  OrderThreshold Int      @default(10)
+  isPublish      Boolean  @default(true)
 
   createdAt DateTime  @default(now())
   updatedAt DateTime? @updatedAt
@@ -154,11 +154,10 @@ model Product {
   orderItems OrderItem[]
 
   subcategoryId String
-  subcategory   Subcategory @relation(fields: [subcategoryId], references: [id])
-
-  // @@map("products")
+  subcategory   Subcategory @relation(fields: [subcategoryId], references: [id], onDelete: Cascade)
 
   @@index([subcategoryId])
+  @@map("products")
 }
 
 model Subcategory {
@@ -171,11 +170,10 @@ model Subcategory {
   products Product[]
 
   mainCategoryId String
-  mainCategory   MainCategory @relation(fields: [mainCategoryId], references: [id])
-
-  // @@map("sub_categories")
+  mainCategory   MainCategory @relation(fields: [mainCategoryId], references: [id], onDelete: Cascade)
 
   @@index([mainCategoryId])
+  @@map("sub_categories")
 }
 
 model MainCategory {
@@ -187,5 +185,5 @@ model MainCategory {
 
   subcategories Subcategory[]
 
-  // @@map("main_categories")
+  @@map("main_categories")
 }
