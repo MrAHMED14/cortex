@@ -1,11 +1,9 @@
 import type { Metadata } from "next"
 import { Toaster } from "@/components/ui/sonner"
-import { Inter } from "next/font/google"
+import { inter } from "./styles/fonts"
 import { cn } from "@/lib/utils"
 
 import "./globals.css"
-
-const inter = Inter({ subsets: ["latin"], display: "swap" })
 
 // TODO:
 // Change the Metadata
@@ -22,6 +20,7 @@ export default async function RootLayout({
   return (
     <html lang="en" className="h-full scroll-smooth" suppressHydrationWarning>
       <body
+        style={inter.style}
         className={cn("h-full antialiased", inter.className)}
         suppressHydrationWarning
       >
