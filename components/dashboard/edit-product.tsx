@@ -299,8 +299,8 @@ export default function EditProduct({
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
         {/* Product Info */}
-        <div className="flex items-start justify-between gap-5">
-          <section className="w-[70%]">
+        <div className="flex flex-col md:flex-row items-start justify-between gap-5">
+          <section className="w-full md:w-[70%]">
             <h1 className="text-2xl font-semibold">Product Info</h1>
             <div className="mt-5 space-y-3">
               {/* Title Input */}
@@ -510,7 +510,7 @@ export default function EditProduct({
           </section>
 
           {/* Upload Files */}
-          <section className="w-[80%]">
+          <section className="w-full md:w-[80%]">
             <h1 className="text-2xl font-semibold">Upload Files</h1>
             <div
               {...getRootProps({
