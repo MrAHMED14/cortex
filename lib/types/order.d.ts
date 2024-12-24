@@ -25,6 +25,12 @@ export type OrderWithProduct = Prisma.OrderGetPayload<{
   }
 }>
 
+export type OrderWithUser = Prisma.OrderGetPayload<{
+  include: {
+    user: true
+  }
+}>
+
 export type OrderProductWithQuantity = Prisma.OrderItemGetPayload<{
   include: {
     product: true
@@ -33,4 +39,15 @@ export type OrderProductWithQuantity = Prisma.OrderItemGetPayload<{
 
 export type OrderHistory = OrderWithProduct & {
   size: number
+}
+
+export interface OrderFilterValues {
+  query?: string
+  status?: string
+  pagination?: {
+    currentPage: number
+    totalPages: number
+    skip: number
+    take: number
+  }
 }
