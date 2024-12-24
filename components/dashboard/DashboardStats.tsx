@@ -1,7 +1,11 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { countProducts } from "@/lib/actions/product/action"
+import { countUsers } from "@/lib/actions/users/action"
 import { DollarSign, PartyPopper, ShoppingBag, User2 } from "lucide-react"
 
 export async function DashboardStats() {
+  const products = await countProducts({})
+  const users = await countUsers({})
   return (
     <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-4">
       <Card>
@@ -23,9 +27,7 @@ export async function DashboardStats() {
         </CardHeader>
         <CardContent>
           <p className="text-2xl font-bold">+{12}</p>
-          <p className="text-xs text-muted-foreground">
-            Total Sales on ShoeMarshal
-          </p>
+          <p className="text-xs text-muted-foreground">Total Sales</p>
         </CardContent>
       </Card>
       <Card>
@@ -34,7 +36,7 @@ export async function DashboardStats() {
           <PartyPopper className="h-4 w-4 text-indigo-500" />
         </CardHeader>
         <CardContent>
-          <p className="text-2xl font-bold">{50}</p>
+          <p className="text-2xl font-bold">{products}</p>
           <p className="text-xs text-muted-foreground">
             Total Products created
           </p>
@@ -46,7 +48,7 @@ export async function DashboardStats() {
           <User2 className="h-4 w-4 text-orange-500" />
         </CardHeader>
         <CardContent>
-          <p className="text-2xl font-bold">{50}</p>
+          <p className="text-2xl font-bold">{users}</p>
           <p className="text-xs text-muted-foreground">Total Users Signed Up</p>
         </CardContent>
       </Card>
