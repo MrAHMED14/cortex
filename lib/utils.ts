@@ -46,6 +46,13 @@ export function slugify(input: string): string {
     .replace(/[^a-z0-9-]/g, "")
 }
 
+export function capitalize2(str: string) {
+  return str
+    .split("-") // Split the string by hyphens
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1)) // Capitalize each word
+    .join(" ") // Join words with a space
+}
+
 export function capitalize(string: string) {
   return string.charAt(0).toUpperCase() + string.slice(1)
 }

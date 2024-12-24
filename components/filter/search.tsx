@@ -8,9 +8,11 @@ import { Input } from "../ui/input"
 import { cn } from "@/lib/utils"
 
 interface SearchProps {
+  path: string
+  name: string
   className?: string
 }
-export default function Search({ className }: SearchProps) {
+export default function Search({ className, path, name }: SearchProps) {
   const [isSearching, startTransition] = useTransition()
   const inputRef = useRef<HTMLInputElement>(null)
   const router = useRouter()
@@ -39,7 +41,7 @@ export default function Search({ className }: SearchProps) {
 
   function search() {
     startTransition(() => {
-      router.push(`/shop?${createQueryString("search", query.trim())}`)
+      router.push(`${path}?${createQueryString("search", query.trim())}`)
     })
   }
 
@@ -48,7 +50,7 @@ export default function Search({ className }: SearchProps) {
       <Input
         disabled={isSearching}
         type="text"
-        placeholder="Search for products..."
+        placeholder={`Search for ${name}...`}
         className="w-full focus-visible:ring-0 border-r-0 rounded-r-none rounded-l-full"
         ref={inputRef}
         value={query}
