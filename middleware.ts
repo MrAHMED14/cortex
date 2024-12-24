@@ -7,8 +7,18 @@ export default async function middleware(request: NextRequest) {
 
   if (!authCookie || !user)
     return NextResponse.redirect(new URL("/login", request.url))
+
+  if (
+    request.nextUrl.pathname.startsWith("/dashboard") &&
+    user.role !== "ADMIN"
+  ) {
+    return Response.json(
+      { success: false, message: "authentication failed" },
+      { status: 401 }
+    )
+  }
 }
 
 export const config = {
-  matcher: ["/my-orders", "/checkout"],
+  matcher: ["/my-orders", "/checkout", "/dashboard/:path*"],
 }

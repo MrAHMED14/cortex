@@ -1,14 +1,17 @@
 import { getUser } from "@/lib/actions/auth/action"
 import Image from "next/image"
 import Link from "next/link"
-import { notFound } from "next/navigation"
 import { UserAvatar } from "../navbar/menu-items"
 import { DashboardLinks } from "./dasboard-links"
 
 export default async function DashboardNavbar() {
   const user = await getUser()
   if (!user) {
-    notFound()
+    throw new Error("User not found")
+  }
+
+  if (user.role !== "ADMIN") {
+    throw new Error("Unauthorized")
   }
 
   return (
