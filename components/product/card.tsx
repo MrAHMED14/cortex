@@ -12,8 +12,20 @@ interface ProductCardProps {
 
 export default function ProductCard({
   className,
-  product: { title, price, slug, img, stock, discountPrice },
+  product: {
+    title,
+    price,
+    slug,
+    img,
+    stock,
+    discountPrice,
+    OrderThreshold,
+    createdAt,
+  },
 }: ProductCardProps) {
+  const isNew =
+    new Date().getTime() - new Date(createdAt).getTime() <=
+    7 * 24 * 60 * 60 * 1000
   const discountPercentage = discountPrice
     ? ((price - discountPrice) / price) * 100
     : undefined
@@ -69,12 +81,12 @@ export default function ProductCard({
       </div>
 
       <div className="absolute flex flex-wrap gap-2 items-center w-fit mx-3 my-3">
-        {true && (
+        {isNew && (
           <Badge className="uppercase bg-stone-900 hover:bg-emerald-400">
             NEW
           </Badge>
         )}
-        {stock === 0 && (
+        {stock <= OrderThreshold && (
           <Badge className="uppercase bg-red-500 hover:bg-red-400">
             out of stock
           </Badge>
