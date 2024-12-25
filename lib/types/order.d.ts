@@ -33,6 +33,7 @@ export type OrderWithProduct = Prisma.OrderGetPayload<{
 export type OrderWithUser = Prisma.OrderGetPayload<{
   include: {
     user: true
+    address: true
   }
 }>
 

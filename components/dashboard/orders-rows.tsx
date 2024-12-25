@@ -18,6 +18,7 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useEffect } from "react"
 import { Badge } from "../ui/badge"
+import { capitalize, cn, formatUSD } from "@/lib/utils"
 
 interface OrdersRowsProps {
   data: OrderWithUser[] | undefined
@@ -47,25 +48,39 @@ export default function OrdersRows({ data }: OrdersRowsProps) {
     <>
       {data?.map((item) => (
         <TableRow key={item.id}>
-          <TableCell>{item.user.displayName}</TableCell>
-          <TableCell>{"Payment"}</TableCell>
-          <TableCell>
-            {item.isCompleted ? (
-              <Badge className="text-xs bg-green-500 hover:bg-green-400">
-                Delivered
-              </Badge>
-            ) : (
-              <Badge className="text-xs bg-yellow-400 hover:bg-yellow-300 text-primary">
-                Pending
-              </Badge>
-            )}
+          <TableCell className="font-semibold">
+            <span className="uppercase">{item.address.firstName}</span>{" "}
+            <span className="capitalize">{item.address.lastName}</span>
           </TableCell>
-          <TableCell>{item.createdAt.toLocaleDateString()}</TableCell>
+          <TableCell>{item.user.email}</TableCell>
+          <TableCell>
+            <Badge
+              className={cn(
+                "text-xs uppercase",
+                item.status === "PENDING" &&
+                  "bg-yellow-500 hover:bg-yellow-400",
+                item.status === "DELIVERED" &&
+                  "bg-green-500 hover:bg-green-600",
+                item.status === "CANCELLED" && "bg-red-500 hover:bg-red-600"
+              )}
+            >
+              {item.status}
+            </Badge>
+          </TableCell>
+          <TableCell>
+            {new Date(item.createdAt).toLocaleString("en-GB", {
+              day: "2-digit",
+              month: "2-digit",
+              year: "numeric",
+              hour: "2-digit",
+              minute: "2-digit",
+              second: "2-digit",
+            })}
+          </TableCell>
+          <TableCell>{formatUSD(item.total)}</TableCell>
 
           {/* Actions */}
-          <TableCell className="text-end space-x-2">
-            <Badge className="text-xs bg-blue-500">New</Badge>
-
+          <TableCell className="text-end">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button size="icon" variant="ghost">

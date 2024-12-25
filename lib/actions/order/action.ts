@@ -161,6 +161,7 @@ export async function getAllOrders(filterValue: OrderFilterValues) {
       where,
       include: {
         user: true,
+        address: true,
       },
       orderBy: { createdAt: "desc" },
       skip: pagination?.skip,

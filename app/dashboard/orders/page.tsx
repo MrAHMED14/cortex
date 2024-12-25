@@ -102,10 +102,11 @@ export default async function ProductsRoute({
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Customer</TableHead>
-                <TableHead>Payment</TableHead>
+                <TableHead>Customer Name</TableHead>
+                <TableHead>Email</TableHead>
                 <TableHead>Status</TableHead>
-                <TableHead>Date</TableHead>
+                <TableHead>Date Placed</TableHead>
+                <TableHead>Total Amount</TableHead>
                 <TableHead className="text-end">Actions</TableHead>
               </TableRow>
             </TableHeader>
