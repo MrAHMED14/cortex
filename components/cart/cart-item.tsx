@@ -12,7 +12,7 @@ export default function CartItem({
   cartItem: {
     quantity,
     productId,
-    product: { title, price, img, slug, stock, discountPrice },
+    product: { title, price, img, slug, stock, discountPrice,OrderThreshold },
   },
 }: CartItemProps) {
   return (
@@ -32,6 +32,7 @@ export default function CartItem({
             productId={productId}
             quantity={quantity}
             stock={stock}
+            orderThreshold={OrderThreshold}
           />
 
           <div className="text-end md:order-4 md:w-32">

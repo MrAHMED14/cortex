@@ -5,22 +5,28 @@ import { Loader2Icon, ShoppingBagIcon } from "lucide-react"
 import { JSX, useState, useTransition } from "react"
 import { toast } from "sonner"
 import Select from "../ui/select"
+import { Button } from "../ui/button"
 
 interface AddToCartProps {
   productId: string
   stock: number
+  orderThreshold: number
 }
-export default function AddToCart({ productId, stock }: AddToCartProps) {
+export default function AddToCart({
+  productId,
+  stock,
+  orderThreshold,
+}: AddToCartProps) {
   const [isPending, startTransition] = useTransition()
   const [quantity, setQuantity] = useState(1)
 
   const handleAddToCart = () => {
     startTransition(async () => {
-      if (stock < quantity) {
+      if (stock - quantity <= orderThreshold) {
         toast.error("Insufficient stock")
         return
       }
-      await setProductQuantity(productId, quantity, stock)
+      await setProductQuantity(productId, quantity)
       toast.success("Added to cart")
     })
   }
@@ -35,7 +41,7 @@ export default function AddToCart({ productId, stock }: AddToCartProps) {
   }
 
   return (
-    <div className="flex items-center gap-1">
+    <div className="w-full flex items-center gap-2">
       <label htmlFor="quantityOptions" className="sr-only">
         quantity options
       </label>
@@ -43,19 +49,20 @@ export default function AddToCart({ productId, stock }: AddToCartProps) {
         id="quantityOptions"
         disabled={isPending}
         value={quantity}
+        className="w-full"
         onChange={(e) => setQuantity(parseInt(e.currentTarget.value))}
       >
         {quantityOptions}
       </Select>
-      <button
+      <Button
         disabled={isPending}
         onClick={handleAddToCart}
-        className="max-w-xs flex-1 bg-[#ff0000] rounded-md py-2 px-8 flex items-center justify-center gap-2 text-base font-medium text-white hover:bg-red-600 sm:w-full"
+        className="max-w-xs flex items-center justify-center gap-2 sm:w-full"
       >
-        <ShoppingBagIcon className="size-6" />
+        <ShoppingBagIcon className="size-4" />
         Add to cart
         {isPending && <Loader2Icon className="size-4 animate-spin" />}
-      </button>
+      </Button>
     </div>
   )
 }

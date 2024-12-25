@@ -10,12 +10,14 @@ interface QuantityControlProps {
   quantity: number
   productId: string
   stock: number
+  orderThreshold: number
 }
 
 export default function QuantityControl({
   quantity,
   productId,
   stock,
+  orderThreshold,
 }: QuantityControlProps) {
   const [isPending, startTransition] = useTransition()
 
@@ -24,11 +26,11 @@ export default function QuantityControl({
     if (typeof value !== "number") throw new Error("Incompatible type.")
 
     startTransition(async () => {
-      if (stock < value) {
+      if (stock - value <= orderThreshold) {
         toast.error("Insufficient stock")
         return
       } else {
-        await setProductQuantity(productId, value, stock)
+        await setProductQuantity(productId, value)
       }
     })
   }
