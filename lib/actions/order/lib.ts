@@ -19,6 +19,11 @@ export function orderDynamicQuery({
         OR: [
           { id: { search: searchString } },
           { user: { email: { search: searchString } } },
+          { address: { firstName: { search: searchString } } },
+          { address: { lastName: { search: searchString } } },
+          { address: { phoneNumber: { search: searchString } } },
+          { address: { commune: { search: searchString } } },
+          { address: { wilaya: { search: searchString } } },
           { user: { displayName: { search: searchString } } },
           { userId: { search: searchString } },
         ],
