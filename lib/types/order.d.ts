@@ -3,10 +3,15 @@ import { ShoppingCart } from "./cart"
 
 export interface Address {
   street: string
-  // city: string;
-  // state: string;
-  // postalCode: string;
-  // country: string;
+  cardNumber: string
+  cvv: string
+  expiryDate: string
+  cardName: string
+  wilaya: string
+  commune: string
+  firstName: string
+  lastName: string
+  phoneNumber: string
 }
 
 export interface OrderRequest {

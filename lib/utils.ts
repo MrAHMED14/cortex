@@ -26,6 +26,26 @@ export const loginSchema = z.object({
 
 export const orderFormSchema = z.object({
   street: requiredString,
+  cardName: requiredString,
+  cvv: z.string().length(3, "Must be 3 digits"),
+  expiryDate: requiredString.refine((value) => {
+    const [month, year] = value.split("/").map(Number)
+    return (
+      value.split("/").length === 2 && month >= 1 && month <= 12 && year > 24
+    )
+  }, "Invalid date format"),
+  cardNumber: requiredString,
+  wilaya: requiredString, 
+  commune: requiredString,
+  firstName: requiredString,
+  lastName: requiredString,
+  phoneNumber: z
+    .string()
+    .length(10, "Must be 10 digits")
+    .refine(
+      (value) => /^(05|06|07)/.test(value),
+      "Must start with 05, 06, or 07"
+    ),
 })
 
 export type OrderFormValues = z.infer<typeof orderFormSchema>

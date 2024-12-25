@@ -46,8 +46,13 @@ model Session {
 }
 
 model Address {
-  id     String @id @default(uuid())
-  street String
+  id          String @id @default(uuid())
+  street      String
+  wilaya      String
+  commune     String
+  firstName   String
+  lastName    String
+  phoneNumber String
 
   createdAt DateTime  @default(now())
   updatedAt DateTime? @updatedAt
@@ -61,9 +66,17 @@ model Address {
   @@map("addresses")
 }
 
+enum orderStatus {
+  PENDING
+  DELIVERED
+  CANCELLED
+}
+
 model Order {
-  id          String  @id @default(uuid())
-  isCompleted Boolean @default(false)
+  id String @id @default(uuid())
+
+  total  Float
+  status orderStatus @default(PENDING)
 
   createdAt DateTime  @default(now())
   updatedAt DateTime? @updatedAt
@@ -84,8 +97,8 @@ model OrderItem {
   id       String @id @default(uuid())
   quantity Int
 
-  price         Float
-  discountPrice Float?
+  price Float
+  // discountPrice Float?
 
   createdAt DateTime  @default(now())
   updatedAt DateTime? @updatedAt

@@ -34,6 +34,12 @@ export async function createOrder(orderRequest: OrderRequest) {
       const addressRecord = await tx.address.create({
         data: {
           street: address.street,
+          commune: address.commune,
+          firstName: address.firstName,
+          lastName: address.lastName,
+          phoneNumber: address.phoneNumber,
+          wilaya: address.wilaya,
+
           userId: user.id,
         },
       })
@@ -42,13 +48,15 @@ export async function createOrder(orderRequest: OrderRequest) {
       const createdOrder = await tx.order.create({
         data: {
           userId: user.id,
+          total: order.subtotal,
           addressId: addressRecord.id,
           items: {
             create: order.items.map((item) => ({
               productId: item.productId,
               quantity: item.quantity,
-              price: item.product.price,
-              discountPrice: item.product.discountPrice ?? null,
+              price: item.product.discountPrice
+                ? item.product.discountPrice
+                : item.product.price,
             })),
           },
         },
@@ -65,17 +73,17 @@ export async function createOrder(orderRequest: OrderRequest) {
       for (const item of createdOrder.items) {
         const product = await tx.product.findUnique({
           where: { id: item.productId },
-          select: { stock: true },
+          select: { stock: true, OrderThreshold: true },
         })
 
         if (!product) {
           throw new Error(`Product with ID ${item.productId} not found`)
         }
 
-        // Check if enough stock is available
-        if (product.stock < item.quantity) {
+        // Check if stock is below the order threshold
+        if (product.stock - item.quantity <= product.OrderThreshold) {
           throw new Error(
-            `Insufficient stock for product ID ${item.product.title}`
+            `Stock for product ${item.product.title} cannot go below the order threshold`
           )
         }
 
@@ -84,23 +92,16 @@ export async function createOrder(orderRequest: OrderRequest) {
           where: { id: item.productId },
           data: {
             stock: {
-              decrement: item.quantity, // Reduce stock by the quantity ordered
+              decrement: item.quantity,
             },
           },
         })
       }
 
       // Delete the cart
-      const cartId = order.id
-      await tx.cartItem.deleteMany({
-        where: {
-          cartId,
-        },
-      })
-
       await tx.cart.delete({
         where: {
-          id: cartId,
+          id: order.id,
         },
       })
     })

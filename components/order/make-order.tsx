@@ -25,6 +25,14 @@ import {
 import { Input } from "../ui/input"
 import { Label } from "../ui/label"
 import { Loader2Icon } from "lucide-react"
+import { useState } from "react"
+
+import wilayas from "@/lib/data/wilayas.json"
+import communes from "@/lib/data/communes.json"
+
+import Select from "../ui/select"
+import Link from "next/link"
+import Image from "next/image"
 
 interface MakeOrderProps {
   cart: ShoppingCart
@@ -34,22 +42,53 @@ interface MakeOrderProps {
 
 export default function MakeOrder({ cart, userId, userEmail }: MakeOrderProps) {
   const [isPending, startTransition] = useTransition()
+  const [selectedWilaya, setSelectedWilaya] = useState("")
+  const [filteredCommunes, setFilteredCommunes] = useState<typeof communes>([])
 
   const form = useForm<OrderFormValues>({
     resolver: zodResolver(orderFormSchema),
     defaultValues: {
       street: "",
+      cardNumber: "",
+      cvv: "",
+      expiryDate: "",
+      cardName: "",
+      wilaya: "",
+      commune: "",
+      firstName: "",
+      lastName: "",
+      phoneNumber: "",
     },
   })
 
-  function onSubmit({ street }: OrderFormValues) {
-    const address = { street }
+  function onSubmit(values: OrderFormValues) {
     startTransition(async () => {
-      await createOrder({ order: cart, userId, address })
+      await createOrder({ order: cart, userId, address: values })
       form.reset()
       toast.success("You order was placed successfully", { duration: 3000 })
     })
   }
+  const originalPrice = cart.items.reduce(
+    (acc, item) => acc + item.product.price * item.quantity,
+    0
+  )
+
+  const handleWilayaChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const wilayaName = e.target.value
+    setSelectedWilaya(wilayaName)
+    const wilaya = wilayas.find((w) => w.name === wilayaName)
+    if (wilaya) {
+      const filtered = communes.filter(
+        (commune) => commune.wilaya_id === wilaya.code
+      )
+      setFilteredCommunes(filtered)
+    } else {
+      setFilteredCommunes([])
+    }
+    form.setValue("wilaya", wilayaName)
+    form.setValue("commune", "")
+  }
+
   return (
     <Form {...form}>
       <form
@@ -57,43 +96,130 @@ export default function MakeOrder({ cart, userId, userEmail }: MakeOrderProps) {
         className="lg:flex gap-6 mt-10"
       >
         {/* Forms */}
-        <div className="w-full border border-gray-200 shadow-sm bg-muted dark:border-stone-700 h-fit py-6 px-5 rounded-lg">
+        <div className="w-full rounded-lg border border-neutral-200 bg-neutral-50 shadow-sm p-4 md:p-6">
           {/* Personal Details */}
           <div className="mb-5">
             <h2 className="text-xl font-bold">Personal Details</h2>
             <Label>
               email <span className="text-red-500">*</span>
             </Label>
-            <Input
-              disabled
-              defaultValue={userEmail}
-              className="dark:border-muted-foreground/60"
-            />
-            <div className="mt-2 flex flex-col sm:flex-row w-full items-center gap-2">
+            <Input disabled defaultValue={userEmail} />
+            <div className="my-2 flex flex-col sm:flex-row w-full items-center gap-2">
               <div className="w-full">
-                <Label>
-                  first name <span className="text-red-500">*</span>
-                </Label>
-                <Input
-                  placeholder="First name"
-                  className="dark:border-muted-foreground/60"
+                <FormField
+                  control={form.control}
+                  name="firstName"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>
+                        first name <span className="text-red-500">*</span>
+                      </FormLabel>
+                      <FormControl>
+                        <Input {...field} placeholder="First name" />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
                 />
               </div>
               <div className="w-full">
-                <Label>
-                  last name <span className="text-red-500">*</span>
-                </Label>
-                <Input
-                  placeholder="Last name"
-                  className="dark:border-muted-foreground/60"
+                <FormField
+                  control={form.control}
+                  name="lastName"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>
+                        last name <span className="text-red-500">*</span>
+                      </FormLabel>
+                      <FormControl>
+                        <Input {...field} placeholder="Last name" />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
                 />
               </div>
             </div>
+            <FormField
+              control={form.control}
+              name="phoneNumber"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>
+                    phone number <span className="text-red-500">*</span>
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      maxLength={10}
+                      {...field}
+                      placeholder="Enter your phone number"
+                      onKeyDown={(e) => {
+                        if (
+                          !/[0-9]/.test(e.key) &&
+                          e.key !== "Backspace" &&
+                          e.key !== "Delete"
+                        ) {
+                          e.preventDefault()
+                        }
+                      }}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
           </div>
 
           {/* Billing address */}
           <div className="my-5">
             <h2 className="text-xl font-bold">Billing address</h2>
+            <FormField
+              control={form.control}
+              name="wilaya"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>
+                    wilaya <span className="text-red-500">*</span>
+                  </FormLabel>
+                  <FormControl>
+                    <Select {...field} onChange={handleWilayaChange}>
+                      <option value="">Select Wilaya</option>
+                      {wilayas.map((wilaya) => (
+                        <option key={wilaya.code} value={wilaya.name}>
+                          {wilaya.name}
+                        </option>
+                      ))}
+                    </Select>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <div className="my-2">
+              <FormField
+                control={form.control}
+                name="commune"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>
+                      commune <span className="text-red-500">*</span>
+                    </FormLabel>
+                    <FormControl>
+                      <Select {...field}>
+                        <option value="">Select Commune</option>
+                        {filteredCommunes.map((commune) => (
+                          <option key={commune.id} value={commune.name}>
+                            {commune.name}
+                          </option>
+                        ))}
+                      </Select>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+
             <FormField
               control={form.control}
               name="street"
@@ -103,11 +229,7 @@ export default function MakeOrder({ cart, userId, userEmail }: MakeOrderProps) {
                     address <span className="text-red-500">*</span>
                   </FormLabel>
                   <FormControl>
-                    <Input
-                      className="dark:border-muted-foreground/60"
-                      placeholder="Your address here"
-                      {...field}
-                    />
+                    <Input placeholder="Your address here" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -118,101 +240,163 @@ export default function MakeOrder({ cart, userId, userEmail }: MakeOrderProps) {
           {/* Payment Method */}
           <div className="my-5">
             <h2 className="text-xl font-bold">Payment Method</h2>
-            <div className="mt-2 grid grid-cols-1 gap-4 md:grid-cols-3">
-              <div className="rounded-lg border border-gray-200 bg-gray-50 p-4 ps-4 dark:border-gray-700 dark:bg-gray-800">
-                <div className="flex items-start">
-                  <div className="flex h-5 items-center">
-                    <input
-                      id="credit-card"
-                      aria-describedby="credit-card-text"
-                      type="radio"
-                      name="payment-method"
-                      value=""
-                      className="h-4 w-4 border-gray-300 bg-white text-primary-600 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800"
-                      defaultChecked
-                    />
-                  </div>
 
-                  <div className="ms-4 text-sm">
-                    <label
-                      htmlFor="credit-card"
-                      className="font-medium leading-none text-gray-900 dark:text-white"
-                    >
-                      Credit Card
-                    </label>
-                    <p
-                      id="credit-card-text"
-                      className="mt-1 text-xs font-normal text-gray-500 dark:text-gray-400"
-                    >
-                      Pay with your credit card
-                    </p>
-                  </div>
+            <div className="w-full">
+              <FormField
+                control={form.control}
+                name="cardNumber"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>
+                      Card number <span className="text-red-500">*</span>
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        maxLength={19}
+                        pattern="\d{4} \d{4} \d{4} \d{4}"
+                        placeholder="Card number"
+                        {...field}
+                        onKeyDown={(e) => {
+                          if (
+                            !/[0-9]/.test(e.key) &&
+                            e.key !== "Backspace" &&
+                            e.key !== "Delete"
+                          ) {
+                            e.preventDefault()
+                          }
+                        }}
+                        onChange={(e) => {
+                          const value = e.target.value
+                            .replace(/\s?/g, "")
+                            .replace(/(\d{4})/g, "$1 ")
+                            .trim()
+                          field.onChange(value)
+                        }}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <div className="flex w-full items-center gap-2 my-2">
+                <div className="w-full">
+                  <FormField
+                    control={form.control}
+                    name="expiryDate"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>
+                          Expiry date <span className="text-red-500">*</span>
+                        </FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder="MM/YY"
+                            maxLength={5}
+                            pattern="(0[1-9]|1[0-2])\/([0-9]{2})"
+                            {...field}
+                            onChange={(e) => {
+                              const value = e.target.value
+                                .replace(/\D/g, "")
+                                .replace(/(\d{2})(\d{0,2})/, "$1/$2")
+                                .trim()
+                              field.onChange(value)
+                            }}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                <div className="w-full">
+                  <FormField
+                    control={form.control}
+                    name="cvv"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>
+                          CVV <span className="text-red-500">*</span>
+                        </FormLabel>
+                        <FormControl>
+                          <Input
+                            type="password"
+                            maxLength={3}
+                            pattern="\d{3}"
+                            placeholder="Security Code"
+                            {...field}
+                            onKeyDown={(e) => {
+                              if (
+                                !/[0-9]/.test(e.key) &&
+                                e.key !== "Backspace" &&
+                                e.key !== "Delete"
+                              ) {
+                                e.preventDefault()
+                              }
+                            }}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
                 </div>
               </div>
-
-              <div className="rounded-lg border border-gray-200 bg-gray-50 p-4 ps-4 dark:border-gray-700 dark:bg-gray-800">
-                <div className="flex items-start">
-                  <div className="flex h-5 items-center">
-                    <input
-                      id="pay-on-delivery"
-                      type="radio"
-                      name="payment-method"
-                      value=""
-                      className="h-4 w-4 border-gray-300 bg-white text-primary-600 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800"
-                    />
-                  </div>
-
-                  <div className="ms-4 text-sm">
-                    <label
-                      htmlFor="pay-on-delivery"
-                      className="font-medium leading-none text-gray-900 dark:text-white"
-                    >
-                      Payment on deliver
-                    </label>
-                    <p
-                      id="pay-on-delivery-text"
-                      className="mt-1 text-xs font-normal text-gray-500 dark:text-gray-400"
-                    >
-                      +$15 payment processing fee
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="rounded-lg border border-gray-200 bg-gray-50 p-4 ps-4 dark:border-gray-700 dark:bg-gray-800">
-                <div className="flex items-start">
-                  <div className="flex h-5 items-center">
-                    <input
-                      id="paypal-2"
-                      type="radio"
-                      name="payment-method"
-                      value=""
-                      className="h-4 w-4 border-gray-300 bg-white text-primary-600 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800"
-                    />
-                  </div>
-
-                  <div className="ms-4 text-sm">
-                    <label
-                      htmlFor="paypal-2"
-                      className="font-medium leading-none text-gray-900 dark:text-white"
-                    >
-                      Paypal account
-                    </label>
-                    <p
-                      id="paypal-text"
-                      className="mt-1 text-xs font-normal text-gray-500 dark:text-gray-400"
-                    >
-                      Connect to your account
-                    </p>
-                  </div>
-                </div>
+              <div className="w-full">
+                <FormField
+                  control={form.control}
+                  name="cardName"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>
+                        Name on the card <span className="text-red-500">*</span>
+                      </FormLabel>
+                      <FormControl>
+                        <Input placeholder="Name" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
               </div>
             </div>
-          </div>
-
-          {/* Shipping Details */}
-          <div className="my-5">
-            <h2 className="text-xl font-bold">Shipping Details</h2>
+            <div className="mt-4 text-center">
+              <p className="text-sm font-normal text-muted-foreground dark:text-muted-foreground">
+                Your order will be shipped using{" "}
+                <Link
+                  href="https://yalidine.com/"
+                  className="hover:underline"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Yalidine express
+                </Link>
+                .
+              </p>
+            </div>
+            <div className="w-full flex items-center justify-center gap-4 mt-4">
+              <Image
+                src="/stripe.svg"
+                alt="stripe"
+                width={80}
+                height={80}
+                className=""
+              />
+              <Image
+                src="/visa.svg"
+                alt="visa"
+                width={80}
+                height={80}
+                className=""
+              />
+              <Image
+                src="/mastercard.svg"
+                alt="mastercard"
+                width={60}
+                height={60}
+                className=""
+              />
+            </div>
           </div>
         </div>
 
@@ -226,7 +410,7 @@ export default function MakeOrder({ cart, userId, userEmail }: MakeOrderProps) {
 
           {/* Order summary */}
           <div className="mx-auto mt-6 lg:max-w-4xl flex-1 space-y-6 w-full">
-            <div className="space-y-4 rounded-lg border border-gray-200 p-4 shadow-sm bg-muted dark:border-stone-700 dark:bg-muted sm:p-6">
+            <div className="space-y-4 rounded-lg border border-neutral-200 bg-neutral-50 shadow-sm p-4 md:p-6">
               <p className="text-xl font-semibold text-gray-900 dark:text-white">
                 Order summary
               </p>
@@ -238,7 +422,7 @@ export default function MakeOrder({ cart, userId, userEmail }: MakeOrderProps) {
                       Original price
                     </dt>
                     <dd className="text-base font-medium text-gray-900 dark:text-white">
-                      {formatUSD(formatFloatNumber(cart.subtotal))}
+                      {formatUSD(formatFloatNumber(originalPrice))}
                     </dd>
                   </dl>
 
@@ -247,7 +431,10 @@ export default function MakeOrder({ cart, userId, userEmail }: MakeOrderProps) {
                       Savings
                     </dt>
                     <dd className="text-base font-medium text-green-600">
-                      -{formatUSD(formatFloatNumber(0))}
+                      -
+                      {formatUSD(
+                        formatFloatNumber(originalPrice - cart.subtotal)
+                      )}
                     </dd>
                   </dl>
                 </div>
@@ -265,7 +452,7 @@ export default function MakeOrder({ cart, userId, userEmail }: MakeOrderProps) {
               <Button
                 type="submit"
                 disabled={isPending}
-                className="flex w-full items-center gap-2 justify-center rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-700"
+                className="flex w-full items-center gap-2 justify-center rounded-lg px-5 py-2.5 text-sm font-medium"
               >
                 Place order
                 {isPending && <Loader2Icon className="size-3 animate-spin" />}
@@ -274,11 +461,11 @@ export default function MakeOrder({ cart, userId, userEmail }: MakeOrderProps) {
               <div className="flex items-center justify-center gap-2">
                 <span className="text-sm font-normal text-muted-foreground dark:text-muted-foreground">
                   By placing your order, you agree to our company{" "}
-                  <span className="font-medium text-blue-500">
+                  <span className="font-medium text-primary">
                     Privacy Policy
                   </span>{" "}
                   and{" "}
-                  <span className="font-medium text-blue-500">
+                  <span className="font-medium text-primary">
                     Conditions of Use
                   </span>
                 </span>

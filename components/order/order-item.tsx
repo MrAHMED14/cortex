@@ -9,11 +9,11 @@ interface OrderItemProps {
 export default function OrderItem({
   cartItem: {
     quantity,
-    product: { title, price, img, slug },
+    product: { title, price, discountPrice, img, slug },
   },
 }: OrderItemProps) {
   return (
-    <div className="rounded-lg border border-gray-200 p-4 shadow-sm bg-muted dark:border-stone-700 dark:bg-muted md:p-6">
+    <div className="rounded-lg border border-neutral-200 bg-neutral-50 shadow-sm p-4 md:p-6">
       <div className="space-y-4 md:flex md:items-center md:justify-between md:gap-6 md:space-y-0">
         <Link href={`/shop/${slug}`} className="w-20 shrink-0 md:order-1 ">
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -27,9 +27,22 @@ export default function OrderItem({
         <div className="flex items-center justify-between md:order-3 md:justify-end">
           <span>x{quantity}</span>
           <div className="text-end md:order-4 md:w-32">
-            <p className="text-base font-bold text-gray-900 dark:text-white">
-              {formatUSD(price)}
-            </p>
+            {discountPrice ? (
+              <>
+                <p className="text-xs line-through text-gray-900 dark:text-white">
+                  {formatUSD(price)}
+                </p>
+                <p className="text-base font-bold text-gray-900 dark:text-white">
+                  {formatUSD(discountPrice)}
+                </p>
+              </>
+            ) : (
+              <>
+                <p className="text-base font-bold text-gray-900 dark:text-white">
+                  {formatUSD(price)}
+                </p>
+              </>
+            )}
           </div>
         </div>
 
