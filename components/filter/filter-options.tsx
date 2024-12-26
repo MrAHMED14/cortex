@@ -96,7 +96,7 @@ export default function FilterOptions({
     (e: ChangeEvent<HTMLInputElement>) => {
       const checked = e.target.checked
       setAvailable(checked)
-      updateRoute(createQueryString("available", checked ? "true" : ""))
+      updateRoute(createQueryString("status", checked ? "in-stock" : ""))
     },
     [createQueryString, updateRoute]
   )
@@ -198,7 +198,7 @@ export default function FilterOptions({
         {memoizedSubCategories}
       </Select>
 
-      <div className="flex gap-2">
+      {/* <div className="flex gap-2">
         <input
           type="checkbox"
           className="accent-white"
@@ -210,7 +210,7 @@ export default function FilterOptions({
         <label htmlFor="available">
           <span className="flex items-center gap-2">Available</span>
         </label>
-      </div>
+      </div> */}
 
       <div>
         <label>
