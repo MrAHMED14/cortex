@@ -4,6 +4,8 @@ import { cn, formatFloatNumber, formatUSD } from "@/lib/utils"
 import Image from "next/image"
 import Link from "next/link"
 import { Badge } from "../ui/badge"
+import { FaCartPlus } from "react-icons/fa"
+import { PiHeartFill } from "react-icons/pi"
 
 interface ProductCardProps {
   product: Product
@@ -41,10 +43,10 @@ export default function ProductCard({
         <div className="w-full h-full flex items-center justify-center pt-3">
           {/* Image */}
           <Image
-            src={"/product-images/product-8.jpg"}
+            src={img[0]}
             width={150}
             height={150}
-            alt={`img`}
+            alt={title}
             className="w-[160px] h-[160px] object-cover object-center rounded scale-[.97]"
           />
           {/* <div className="w-[160px] h-[160px] {w-[180px]} {h-40} bg-gray-300/80 rounded-lg animate-pulse" /> */}
@@ -59,23 +61,37 @@ export default function ProductCard({
             </p>
           </div>
 
-          <div className="w-full h-full flex flex-col justify-end px-4 pb-3 mt-2">
-            {discountPrice ? (
-              <>
-                {/* Orginal price */}
-                <p className="text-muted-foreground text-sm font-semibold line-through leading-none">
-                  {formatUSD(formatFloatNumber(price))}
-                </p>
-                {/* Price after discount */}
-                <p className="text-slate-950 font-bold">
-                  {formatUSD(discountPrice)}
-                </p>
-              </>
-            ) : (
-              <>
-                <p className="text-slate-950 font-bold">{formatUSD(price)}</p>
-              </>
-            )}
+          <div className="w-full h-full flex justify-between px-4 pb-3 mt-2">
+            <div className="w-full h-full flex flex-col justify-end">
+              {discountPrice ? (
+                <>
+                  {/* Orginal price */}
+                  <p className="text-muted-foreground text-sm font-semibold line-through leading-none">
+                    {formatUSD(formatFloatNumber(price))}
+                  </p>
+                  {/* Price after discount */}
+                  <p className="text-slate-950 font-bold">
+                    {formatUSD(discountPrice)}
+                  </p>
+                </>
+              ) : (
+                <>
+                  <p className="text-slate-950 font-bold">{formatUSD(price)}</p>
+                </>
+              )}
+            </div>
+            <div className="w-1/2 flex justify-end items-end mb-1">
+              <div className="flex justify-end items-center gap-2">
+                <FaCartPlus
+                  size={25}
+                  className="text-slate-950/80 hover:text-slate-950"
+                />
+                <PiHeartFill
+                  size={25}
+                  className="text-slate-950/80 hover:text-red-500"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>
