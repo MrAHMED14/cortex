@@ -45,6 +45,9 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
   const sort =
     typeof searchParams.sort === "string" ? searchParams.sort : undefined
 
+  const status =
+    typeof searchParams.status === "string" ? searchParams.status : undefined
+
   const price = {
     gte: min ? parseInt(min) : undefined,
     lte: max ? parseInt(max) : undefined,
@@ -63,6 +66,7 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
     category,
     published: "true",
     subCategory,
+    status,
     selectedOrder,
     price,
   }

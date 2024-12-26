@@ -34,11 +34,6 @@ export function prismaDynamicQuery({
       }
     : {}
 
-  let stockStatus = undefined
-  if (status && status === "in-stock") stockStatus = { stock: { gt: 0 } }
-  else if (status && status === "out-stock")
-    stockStatus = { stock: { equals: 0 } }
-
   let pubStatus = undefined
   if (published && published === "true") {
     pubStatus = { isPublish: true }
@@ -51,7 +46,6 @@ export function prismaDynamicQuery({
       searchFilter,
 
       pubStatus ? pubStatus : {},
-      stockStatus ? stockStatus : {},
 
       subCategory && subCategory.length > 0
         ? {
