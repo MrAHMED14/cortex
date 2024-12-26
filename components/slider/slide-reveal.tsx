@@ -52,7 +52,7 @@ export default function SlideReveal({ imgURL }: SlideRevealProps) {
   }, [emblaApi, isPlaying])
 
   return (
-    <div className="relative flex flex-col items-center w-full aspect-[10/4] lg:aspect-[10/3.5] rounded-md overflow-hidden">
+    <div className="relative flex flex-col items-center w-full aspect-[10/4] lg:aspect-[10/3.5] rounded-md overflow-hidden bg-gray-100 ">
       <div className="w-full h-full embla" ref={emblaRef}>
         <div className="w-full h-full embla__container">
           {imgURL ? (
