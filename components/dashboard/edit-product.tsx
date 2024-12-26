@@ -570,13 +570,10 @@ export default function EditProduct({
               </li>
             ))}
 
-            {files.map((file) => (
-              <li
-                key={file.name}
-                className="relative h-32 rounded-md shadow-lg"
-              >
+            {files.map((file, index) => (
+              <li key={index} className="relative h-32 rounded-md shadow-lg">
                 <Image
-                  src={"/" + file.preview}
+                  src={file.preview}
                   alt={file.name}
                   width={100}
                   height={100}
