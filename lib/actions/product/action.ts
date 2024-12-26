@@ -258,3 +258,18 @@ export async function deleteProduct(id: string) {
     throw error
   }
 }
+
+export async function getHomePageProdcts() {
+  try {
+    const products = await prisma.product.findMany({
+      where: { isPublish: true, discountPrice: { not: null } },
+      take: 5,
+    })
+
+    revalidatePath("/")
+    return products
+  } catch (error) {
+    console.error(error)
+    throw error
+  }
+}
