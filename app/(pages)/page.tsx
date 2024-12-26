@@ -2,10 +2,7 @@ import MaxWidthWrapper from "@/components/global/max-width-wrapper"
 import SlideReveal from "@/components/slider/slide-reveal"
 import HomeSection from "@/components/product/home-section"
 import { Product } from "@prisma/client"
-import {
-  getAllProducts,
-  getHomePageProdcts,
-} from "@/lib/actions/product/action"
+import { getHomePageProdcts } from "@/lib/actions/product/action"
 
 const TEST = {
   id: "1",
@@ -21,6 +18,8 @@ const TEST = {
   updatedAt: null,
   subcategoryId: "string",
 } as Product
+
+export const dynamic = "force-dynamic"
 
 export default async function Home() {
   const imgURL = [
