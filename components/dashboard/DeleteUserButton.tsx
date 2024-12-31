@@ -18,7 +18,8 @@ export function DeleteUserButton({ userId }: DeleteButtonProps) {
     startTransition(async () => {
       await deleteUser(userId)
       toast.success("User Deleted Successfully")
-      router.push("/dashboard/users")
+      router.refresh()
+      router.back()
     })
   }
   return (

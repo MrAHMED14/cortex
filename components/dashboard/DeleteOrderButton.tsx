@@ -18,7 +18,8 @@ export function DeleteOrderButton({ orderId }: DeleteButtonProps) {
     startTransition(async () => {
       await deleteOrder(orderId)
       toast.success("Order Deleted Successfully")
-      router.push("/dashboard/orders")
+      router.refresh()
+      router.back()
     })
   }
   return (

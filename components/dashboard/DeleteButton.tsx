@@ -18,7 +18,9 @@ export function DeleteButton({ productId }: DeleteButtonProps) {
     startTransition(async () => {
       await deleteProduct(productId)
       toast.success("Product Deleted Successfully")
-      router.push("/dashboard/products")
+
+      router.refresh()
+      router.back()
     })
   }
   return (
