@@ -4,7 +4,7 @@ import prisma from "@/lib/db/prisma"
 import { OrderRequest } from "@/lib/types/order"
 import { revalidatePath } from "next/cache"
 import { orderDynamicQuery } from "./lib"
-import { OrderFilterValues, OrderWithUser } from "@/lib/types/order"
+import { OrderFilterValues, OrderDetails } from "@/lib/types/order"
 
 export async function createOrder(orderRequest: OrderRequest) {
   try {
@@ -157,10 +157,15 @@ export async function deleteOrder(orderId: string) {
 export async function getAllOrders(filterValue: OrderFilterValues) {
   try {
     const { where, pagination } = orderDynamicQuery(filterValue)
-    const orders: OrderWithUser[] = await prisma.order.findMany({
+    const orders: OrderDetails[] = await prisma.order.findMany({
       where,
       include: {
         user: true,
+        items: {
+          include: {
+            product: true,
+          },
+        },
         address: true,
       },
       orderBy: { createdAt: "desc" },
@@ -205,6 +210,28 @@ export async function getOrderById(id: string) {
     })
     revalidatePath("/dashboard/ordres/[id]", "page")
     return orders
+  } catch (error) {
+    console.error(error)
+    throw error
+  }
+}
+
+export async function updateOrderStatus(id: string, status: string) {
+  try {
+    if (!id) throw new Error("Order not found.")
+    if (!status) throw new Error("Status not found.")
+    if (!["PENDING", "DELIVERED", "CANCELLED"].includes(status))
+      throw new Error("Invalid status.")
+
+    const statusValue = status as "PENDING" | "DELIVERED" | "CANCELLED"
+    const updatedOrder = await prisma.order.update({
+      where: { id },
+      data: { status: statusValue },
+    })
+
+    revalidatePath("/dashboard/orders")
+    revalidatePath("/dashboard/orders/[id]", "page")
+    return updatedOrder
   } catch (error) {
     console.error(error)
     throw error

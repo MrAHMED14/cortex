@@ -1,3 +1,4 @@
+import ProfileEditPage from "@/components/dashboard/EditAccount"
 import Title from "@/components/ui/title"
 import { getUserById } from "@/lib/actions/users/action"
 import { notFound } from "next/navigation"
@@ -14,7 +15,7 @@ export default async function EditRoute({
 
   return (
     <div className="space-y-5 py-24">
-      <Title>User details</Title>
+      <ProfileEditPage data={data} />
     </div>
   )
 }

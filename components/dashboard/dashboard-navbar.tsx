@@ -19,7 +19,7 @@ export default async function DashboardNavbar() {
       <div className="w-full flex items-center justify-between mx-auto my-2">
         {/* Left */}
         <div className="w-full flex items-center justify-start">
-          <Link href="/dashboard">
+          <Link href="/">
             <span className="sr-only">cortex</span>
 
             <Image

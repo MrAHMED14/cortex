@@ -1,6 +1,5 @@
 "use client"
 
-import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
@@ -12,16 +11,16 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { TableCell, TableRow } from "@/components/ui/table"
 import { createClient } from "@/lib/db/supabase/client"
-import { OrderWithUser } from "@/lib/types/order"
-import { MoreHorizontal } from "lucide-react"
+import { OrderDetails } from "@/lib/types/order"
+import { cn, formatUSD } from "@/lib/utils"
+import { CheckCircle, MoreHorizontal } from "lucide-react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useEffect } from "react"
 import { Badge } from "../ui/badge"
-import { capitalize, cn, formatUSD } from "@/lib/utils"
 
 interface OrdersRowsProps {
-  data: OrderWithUser[] | undefined
+  data: OrderDetails[] | undefined
 }
 
 export default function OrdersRows({ data }: OrdersRowsProps) {
@@ -56,14 +55,17 @@ export default function OrdersRows({ data }: OrdersRowsProps) {
           <TableCell>
             <Badge
               className={cn(
-                "text-xs uppercase",
-                item.status === "PENDING" &&
-                  "bg-yellow-500 hover:bg-yellow-400",
                 item.status === "DELIVERED" &&
-                  "bg-green-500 hover:bg-green-600",
-                item.status === "CANCELLED" && "bg-red-500 hover:bg-red-600"
+                  "bg-green-300 text-green-800 hover:bg-green-400",
+                item.status === "PENDING" &&
+                  "bg-yellow-200 text-yellow-800 hover:bg-yellow-300",
+                item.status === "CANCELLED" &&
+                  "bg-red-300 text-red-800 hover:bg-red-400"
               )}
             >
+              {item.status === "DELIVERED" && (
+                <CheckCircle className="mr-1 h-3 w-3" />
+              )}
               {item.status}
             </Badge>
           </TableCell>
@@ -74,7 +76,6 @@ export default function OrdersRows({ data }: OrdersRowsProps) {
               year: "numeric",
               hour: "2-digit",
               minute: "2-digit",
-              second: "2-digit",
             })}
           </TableCell>
           <TableCell>{formatUSD(item.total)}</TableCell>

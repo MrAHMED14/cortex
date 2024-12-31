@@ -30,10 +30,15 @@ export type OrderWithProduct = Prisma.OrderGetPayload<{
   }
 }>
 
-export type OrderWithUser = Prisma.OrderGetPayload<{
+export type OrderDetails = Prisma.OrderGetPayload<{
   include: {
     user: true
     address: true
+    items: {
+      include: {
+        product: true
+      }
+    }
   }
 }>
 
