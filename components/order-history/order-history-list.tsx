@@ -4,6 +4,7 @@ import { Button } from "../ui/button"
 
 import SecondaryButton from "../ui/secondary-button"
 import Link from "next/link"
+import Image from "next/image"
 
 interface OrderHistoryListProps {
   orders: OrderWithProduct[]
@@ -53,7 +54,8 @@ export function HeadOrderHistoryDetails({
         <div className="flex justify-between pt-6 sm:block sm:pt-0">
           <dt className="font-medium dark:text-white">Order status</dt>
           <dd className="sm:mt-1 text-muted-foreground">
-            Delivered {formatteDate(order.createdAt)}
+            {order.status}{" "}
+            {order.updatedAt ? formatteDate(order.updatedAt) : ""}
           </dd>
         </div>
         <div className="flex justify-between pt-6 font-medium dark:text-white sm:block sm:pt-0">
@@ -99,7 +101,8 @@ export function OrderHistoryItems({ order }: { order: OrderWithProduct }) {
 
 export function OrderHistoryItem({
   orderItem: {
-    product: { title, price, slug },
+    price,
+    product: { title, slug, img },
     quantity,
   },
 }: {
@@ -108,12 +111,11 @@ export function OrderHistoryItem({
   return (
     <div className="flex items-center justify-between py-6 text-sm px-1 sm:px-6">
       <div className="flex items-center gap-5">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={
-            "https://tailwindui.com/img/ecommerce-images/order-history-page-02-product-01.jpg"
-          }
-          alt={"img"}
+        <Image
+          src={img[0]}
+          width={100}
+          height={100}
+          alt={slug}
           className="w-16 h-16 object-center object-cover rounded"
         />
         <div>

@@ -163,12 +163,12 @@ export function UserAvatar({ username, imgUrl }: UserAvatarProps) {
       <DropdownMenuContent align="end">
         <DropdownMenuLabel>{username}</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <Link href="/my-orders">
+        <Link href="#">
           <DropdownMenuItem className="cursor-pointer">
             My Account
           </DropdownMenuItem>
         </Link>
-        <Link href="#">
+        <Link href="/my-orders">
           <DropdownMenuItem className="cursor-pointer">Orders</DropdownMenuItem>
         </Link>
         <DropdownMenuItem
