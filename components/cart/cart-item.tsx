@@ -20,7 +20,6 @@ export default function CartItem({
     <div className="rounded-lg border border-neutral-200 bg-neutral-50 shadow-sm p-4 md:p-6">
       <div className="space-y-4 md:flex md:items-center md:justify-between md:gap-6 md:space-y-0">
         <Link href={`/shop/${slug}`} className="w-20 shrink-0 md:order-1 ">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
           <Image
             width={100}
             height={100}
