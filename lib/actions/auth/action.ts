@@ -8,7 +8,6 @@ import prisma from "@/lib/db/prisma"
 export const getUser = async () => {
   const sessionId = cookies().get(lucia.sessionCookieName)?.value ?? null
   if (!sessionId) return null
-  console.log(sessionId)
 
   const session = await prisma.session.findUnique({ where: { id: sessionId } })
   if (!session) return null
