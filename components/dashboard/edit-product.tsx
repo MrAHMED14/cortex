@@ -288,8 +288,8 @@ export default function EditProduct({
         },
         id
       )
-      router.push("/dashboard/products")
-      form.reset()
+      router.refresh()
+      router.back()
       removeAll()
       toast.success("Product Updated!")
     })
