@@ -3,6 +3,7 @@ import Link from "next/link"
 import QuantityControl from "./quantity-control"
 import RemoveItem from "./remove-item"
 import { formatUSD } from "@/lib/utils"
+import Image from "next/image"
 
 interface CartItemProps {
   cartItem: CartItemWithProduct
@@ -12,7 +13,7 @@ export default function CartItem({
   cartItem: {
     quantity,
     productId,
-    product: { title, price, img, slug, stock, discountPrice,OrderThreshold },
+    product: { title, price, img, slug, stock, discountPrice, OrderThreshold },
   },
 }: CartItemProps) {
   return (
@@ -20,10 +21,12 @@ export default function CartItem({
       <div className="space-y-4 md:flex md:items-center md:justify-between md:gap-6 md:space-y-0">
         <Link href={`/shop/${slug}`} className="w-20 shrink-0 md:order-1 ">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
+          <Image
+            width={100}
+            height={100}
             className="h-20 w-20 aspect-square object-cover object-center rounded border"
-            src="/001.webp"
-            alt="imac image"
+            src={img[0]}
+            alt={slug}
           />
         </Link>
 

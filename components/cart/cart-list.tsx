@@ -9,7 +9,10 @@ import { buttonVariants } from "../ui/button"
 
 export default async function CartList() {
   const cart = await getCart()
-
+  const originalPrice = cart?.items.reduce(
+    (acc, item) => acc + item.product.price * item.quantity,
+    0
+  )
   return (
     <>
       {cart && cart.size > 0 && (
@@ -37,14 +40,17 @@ export default async function CartList() {
                   <dl className="flex items-center justify-between gap-4">
                     <dt className="text-neutral-500">Original price</dt>
                     <dd className="font-medium dark:text-white">
-                      {formatUSD(formatFloatNumber(cart.subtotal))}
+                      {formatUSD(formatFloatNumber(originalPrice ?? 0))}
                     </dd>
                   </dl>
 
                   <dl className="flex items-center justify-between gap-4">
                     <dt className="text-neutral-500">Savings</dt>
                     <dd className="font-medium text-green-600">
-                      -{formatUSD(formatFloatNumber(0.0))}
+                      -
+                      {formatUSD(
+                        formatFloatNumber((originalPrice ?? 0) - cart.subtotal)
+                      )}
                     </dd>
                   </dl>
                 </div>

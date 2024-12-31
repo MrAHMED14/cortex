@@ -4,16 +4,8 @@ import Image from "next/image"
 import { cn } from "@/lib/utils"
 import { useState } from "react"
 
-const images = [
-  "/product-images/1.webp",
-  "/product-images/2.webp",
-  "/product-images/3.webp",
-  "/product-images/4.webp",
-  "/product-images/5.webp",
-]
-
-export function ProductGallery() {
-  const [mainImage, setMainImage] = useState<string>(images[0])
+export function ProductGallery({ imgs }: { imgs: string[] }) {
+  const [mainImage, setMainImage] = useState<string>(imgs[0])
 
   return (
     <div className="space-y-4">
@@ -27,7 +19,7 @@ export function ProductGallery() {
         />
       </div>
       <div className="grid grid-cols-4 gap-4">
-        {images.map((image, index) => (
+        {imgs.map((image, index) => (
           <button
             key={index}
             onClick={() => setMainImage(image)}

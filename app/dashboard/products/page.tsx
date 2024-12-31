@@ -176,8 +176,8 @@ export default async function ProductsRoute({
                 <TableRow key={item.id}>
                   <TableCell>
                     <Image
-                      alt="Product Image"
-                      src={"/product-images/001.webp"}
+                      alt={item.slug}
+                      src={item.img[0]}
                       height={64}
                       width={64}
                       className="rounded-md object-cover h-9 w-9 sm:h-16 sm:w-16"

@@ -1,32 +1,43 @@
+import AddToCart from "@/components/cart/add-to-cart"
 import { Button } from "@/components/ui/button"
+import { formatFloatNumber, formatUSD } from "@/lib/utils"
+import { Product } from "@prisma/client"
 import { Truck } from "lucide-react"
 
-export function ProductDetails() {
-  const originalPrice = 129.99
-  const discountedPrice = 89.99
-  const discountPercentage = Math.round(
-    ((originalPrice - discountedPrice) / originalPrice) * 100
-  )
+export function ProductDetails({
+  data: { id, title, price, discountPrice, description, OrderThreshold, stock },
+}: {
+  data: Product
+}) {
+  const discountPercentage = discountPrice
+    ? Math.round(((price - discountPrice) / price) * 100)
+    : null
 
   return (
     <div className="flex flex-col space-y-4">
-      <h1 className="text-3xl font-bold text-gray-900">Minimalist Desk Lamp</h1>
+      <h1 className="text-3xl font-bold text-gray-900">{title}</h1>
       <div className="flex items-center space-x-2">
-        <p className="text-2xl font-bold text-gray-900">
-          ${discountedPrice.toFixed(2)}
-        </p>
-        <p className="text-lg text-gray-500 line-through">
-          ${originalPrice.toFixed(2)}
-        </p>
-        <span className="bg-green-100 text-green-800 text-sm font-semibold px-2.5 py-0.5 rounded">
-          {discountPercentage}% OFF
-        </span>
+        {discountPrice ? (
+          <>
+            <p className="text-2xl font-bold text-gray-900">
+              {formatUSD(formatFloatNumber(discountPrice))}
+            </p>
+            <p className="text-lg text-gray-500 line-through">
+              {formatUSD(price)}
+            </p>
+            <span className="bg-green-100 text-green-800 text-sm font-semibold px-2.5 py-0.5 rounded">
+              {discountPercentage && discountPercentage.toFixed(0)}% OFF
+            </span>
+          </>
+        ) : (
+          <>
+            <p className="text-2xl font-bold text-gray-900">
+              {formatUSD(formatFloatNumber(price))}
+            </p>
+          </>
+        )}
       </div>
-      <p className="text-gray-600">
-        Elevate your workspace with our sleek and modern desk lamp. Designed for
-        both style and functionality, this lamp provides perfect illumination
-        for your tasks while adding a touch of elegance to your desk.
-      </p>
+      <p className="text-gray-600">{description}</p>
       <div className="flex items-center space-x-2 text-sm text-gray-600">
         <Truck className="h-5 w-5" />
         <span>Free shipping on orders over $100</span>
@@ -41,7 +52,17 @@ export function ProductDetails() {
           <li>Available in matte black or brushed silver finish</li>
         </ul>
       </div>
-      <Button className="w-full">Add to Cart</Button>
+      {stock <= OrderThreshold ? (
+        <Button className="w-full" disabled>
+          Out of stock
+        </Button>
+      ) : (
+        <AddToCart
+          productId={id}
+          stock={stock}
+          orderThreshold={OrderThreshold}
+        />
+      )}
     </div>
   )
 }

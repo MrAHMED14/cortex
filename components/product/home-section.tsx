@@ -6,23 +6,23 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
 } from "@/components/ui/carousel"
 
 import { buttonVariants } from "@/components/ui/button"
 import { Product } from "@prisma/client"
 import { ArrowUpRightIcon } from "lucide-react"
+import { getHomePageProdcts } from "@/lib/actions/product/action"
 
 interface HomeSectionProps {
-  produsts: Product[] | null
   title: string
   url: string
 }
 
-export default function HomeSection({
-  produsts,
-  title,
-  url,
-}: HomeSectionProps) {
+export default async function HomeSection({ title, url }: HomeSectionProps) {
+  const produsts: Product[] | null = await getHomePageProdcts()
+
   return (
     <section className="w-full">
       {produsts && (

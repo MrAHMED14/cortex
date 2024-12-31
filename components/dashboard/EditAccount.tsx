@@ -20,16 +20,6 @@ import { User } from "@prisma/client"
 import { Loader2, Upload } from "lucide-react"
 import Select from "../ui/select"
 
-// Mock user data
-const initialUserData = {
-  name: "John Doe",
-  email: "john.doe@example.com",
-  phone: "+1 (555) 123-4567",
-  address: "123 Main St, Anytown, AN 12345",
-  profilePhoto: "/placeholder.svg?height=100&width=100",
-  role: "user",
-}
-
 const roles = [
   { value: "USER", label: "User" },
   { value: "ADMIN", label: "Admin" },

@@ -31,35 +31,6 @@ import { toast } from "sonner"
 import { updateOrderStatus } from "@/lib/actions/order/action"
 import Link from "next/link"
 
-// Mock data for the invoice
-const invoiceData = {
-  id: "INV-2024-001",
-  date: "2024-03-15",
-  dueDate: "2024-04-14",
-  customerName: "Acme Corporation",
-  customerEmail: "billing@acmecorp.com",
-  customerPhone: "+1 (555) 123-4567",
-  customerAddress: "123 Business Ave, Suite 100, Metropolis, NY 10001, USA",
-  status: "Pending",
-  items: [
-    {
-      description: "Web Development Services",
-      quantity: 80,
-      rate: 150,
-      amount: 12000,
-    },
-    { description: "UI/UX Design", quantity: 40, rate: 200, amount: 8000 },
-    {
-      description: "Server Maintenance",
-      quantity: 10,
-      rate: 100,
-      amount: 1000,
-    },
-  ],
-  subtotal: 21000,
-  tax: 1890,
-  total: 22890,
-}
 interface InvoiceDetailsProps {
   data: OrderDetails
 }
@@ -93,7 +64,7 @@ export default function InvoiceDetailsPage({
   }
 
   return (
-    <div className="container mx-auto p-4 md:p-8">
+    <div className="sm:container mx-auto md:p-8">
       <Card>
         <CardHeader className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>

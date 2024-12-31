@@ -18,51 +18,22 @@ export default function AddToCart({
   orderThreshold,
 }: AddToCartProps) {
   const [isPending, startTransition] = useTransition()
-  const [quantity, setQuantity] = useState(1)
 
   const handleAddToCart = () => {
     startTransition(async () => {
-      if (stock - quantity <= orderThreshold) {
+      if (stock - 1 <= orderThreshold) {
         toast.error("Insufficient stock")
         return
       }
-      await setProductQuantity(productId, quantity)
+      await setProductQuantity(productId, 1)
       toast.success("Added to cart")
     })
   }
 
-  const quantityOptions: JSX.Element[] = []
-  for (let i = 1; i <= 10; i++) {
-    quantityOptions.push(
-      <option key={i} value={i}>
-        {i}
-      </option>
-    )
-  }
-
   return (
-    <div className="w-full flex items-center gap-2">
-      <label htmlFor="quantityOptions" className="sr-only">
-        quantity options
-      </label>
-      <Select
-        id="quantityOptions"
-        disabled={isPending}
-        value={quantity}
-        className="w-full"
-        onChange={(e) => setQuantity(parseInt(e.currentTarget.value))}
-      >
-        {quantityOptions}
-      </Select>
-      <Button
-        disabled={isPending}
-        onClick={handleAddToCart}
-        className="max-w-xs flex items-center justify-center gap-2 sm:w-full"
-      >
-        <ShoppingBagIcon className="size-4" />
-        Add to cart
-        {isPending && <Loader2Icon className="size-4 animate-spin" />}
-      </Button>
-    </div>
+    <Button disabled={isPending} onClick={handleAddToCart} className="w-full">
+      Add to cart
+      {isPending && <Loader2Icon className="ml-2 size-4 animate-spin" />}
+    </Button>
   )
 }
