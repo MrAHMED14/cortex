@@ -64,3 +64,21 @@ export async function deleteUser(userId: string) {
     throw error
   }
 }
+
+export async function updateRole(userId: string, newRole: "ADMIN" | "USER") {
+  try {
+    const updatedUser = await prisma.user.update({
+      where: {
+        id: userId,
+      },
+      data: {
+        role: newRole,
+      },
+    })
+    revalidatePath("/dashboard/users")
+    return updatedUser
+  } catch (error) {
+    console.error(error)
+    throw error
+  }
+}
