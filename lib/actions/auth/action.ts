@@ -3,10 +3,15 @@
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
 import { lucia, validateRequest } from "./auth"
+import prisma from "@/lib/db/prisma"
 
 export const getUser = async () => {
   const sessionId = cookies().get(lucia.sessionCookieName)?.value ?? null
   if (!sessionId) return null
+  console.log(sessionId)
+
+  const session = await prisma.session.findUnique({ where: { id: sessionId } })
+  if (!session) return null
 
   try {
     const { user, session } = await lucia.validateSession(sessionId)
@@ -29,7 +34,6 @@ export const getUser = async () => {
     return user
   } catch {
     throw new Error("Please check your internet connection.")
-    // Next.js throws error when attempting to set cookies when rendering page
   }
 }
 
