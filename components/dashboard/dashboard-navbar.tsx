@@ -3,6 +3,16 @@ import Image from "next/image"
 import Link from "next/link"
 import { UserAvatar } from "../navbar/menu-items"
 import { DashboardLinks } from "./dasboard-links"
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet"
+import { MenuIcon } from "lucide-react"
+import { cn } from "@/lib/utils"
 
 export default async function DashboardNavbar() {
   const user = await getUser()
@@ -41,6 +51,32 @@ export default async function DashboardNavbar() {
         {/* Right */}
         <div className="w-full flex items-center justify-end gap-2">
           <UserAvatar username={user.displayName} imgUrl={user.avatarUrl} />
+          <div className="md:hidden flex">
+            <Sheet>
+              <SheetTrigger>
+                <span className="sr-only">Main Menu</span>
+                <MenuIcon className="w-6 h-6" />
+              </SheetTrigger>
+              <SheetContent
+                className={cn(
+                  "flex flex-col",
+                  !user && "max-[375px]:justify-between"
+                )}
+              >
+                <SheetHeader>
+                  <SheetTitle className="text-start sr-only">
+                    Main Menu
+                  </SheetTitle>
+                  <SheetDescription>
+                    <span className="sr-only">this is the main menu</span>
+                  </SheetDescription>
+                </SheetHeader>
+                <div className="flex flex-col items-start gap-y-5">
+                  <DashboardLinks />
+                </div>
+              </SheetContent>
+            </Sheet>
+          </div>
         </div>
       </div>
     </nav>
