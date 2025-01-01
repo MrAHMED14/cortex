@@ -16,10 +16,9 @@ enum userRole {
 
 model User {
   id           String   @id
-  username     String   @unique
   displayName  String
   role         userRole @default(USER)
-  email        String?  @unique
+  email        String   @unique
   passwordHash String?
   googleId     String?  @unique
   avatarUrl    String?
