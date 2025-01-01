@@ -5,11 +5,10 @@ import { cn } from "@/lib/utils"
 
 import "./globals.css"
 
-// TODO:
-// Change the Metadata
 export const metadata: Metadata = {
-  title: "Cortex",
-  description: "app",
+  title: "Cortex store",
+  description:
+    "The ultimate destination for high-quality tech products and the latest gadgets, offering exceptional prices and top-notch service.",
 }
 
 export default async function RootLayout({
