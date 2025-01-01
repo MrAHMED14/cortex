@@ -53,9 +53,8 @@ export function HeadOrderHistoryDetails({
         </div>
         <div className="flex justify-between pt-6 sm:block sm:pt-0">
           <dt className="font-medium dark:text-white">Order status</dt>
-          <dd className="sm:mt-1 text-muted-foreground">
-            {order.status}{" "}
-            {order.updatedAt ? formatteDate(order.updatedAt) : ""}
+          <dd className="sm:mt-1 text-muted-foreground capitalize">
+            {order.status}
           </dd>
         </div>
         <div className="flex justify-between pt-6 font-medium dark:text-white sm:block sm:pt-0">
