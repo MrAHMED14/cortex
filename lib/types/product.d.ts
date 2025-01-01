@@ -44,6 +44,12 @@ export interface SubcategoryFilterValues {
   }
 }
 
+export type CategoryWithSub = Prisma.MainCategoryGetPayload<{
+  include: {
+    subcategories: true
+  }
+}>
+
 interface ProductRequest {
   title: string
   slug?: string

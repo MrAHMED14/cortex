@@ -21,10 +21,12 @@ import CategoryDropdown from "./category-dropdown"
 import Search from "../filter/search"
 import Image from "next/image"
 import Link from "next/link"
+import { getCategoriesWithSub } from "@/lib/actions/product/action"
 
 export default async function Navbar() {
   const user = await getUser()
   const cart = await getCart()
+  const categories = await getCategoriesWithSub()
 
   return (
     <MaxWidthWrapper>
@@ -32,7 +34,7 @@ export default async function Navbar() {
         <div className="w-full flex items-center justify-between mx-auto my-2">
           {/* Left */}
           <div className="w-full flex items-center justify-start">
-            <CategoryDropdown />
+            <CategoryDropdown categories={categories} />
             <Link className="flex lg:hidden" href="/">
               <span className="sr-only">cortex</span>
               <Image

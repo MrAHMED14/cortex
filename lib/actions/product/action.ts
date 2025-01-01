@@ -273,3 +273,18 @@ export async function getHomePageProdcts() {
     throw error
   }
 }
+
+export async function getCategoriesWithSub() {
+  try {
+    const categories = await prisma.mainCategory.findMany({
+      include: {
+        subcategories: true,
+      },
+    })
+
+    return categories
+  } catch (error) {
+    console.error(error)
+    throw error
+  }
+}
