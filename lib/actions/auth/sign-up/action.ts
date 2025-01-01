@@ -2,19 +2,20 @@
 
 import prisma from "@/lib/db/prisma"
 import { hash } from "@node-rs/argon2"
-import { signUpSchema, SignUpValues } from "@/lib/utils"
+import { signUpSchema } from "@/lib/utils"
 import { generateIdFromEntropySize } from "lucia"
 import { isRedirectError } from "next/dist/client/components/redirect"
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
 import { lucia } from "../auth"
 import { mergeAnonymousCartIntoUserCart } from "../../cart/lib"
+import { z } from "zod"
 
 export async function signUp(
-  credentials: SignUpValues
+  credentials: z.infer<typeof signUpSchema>
 ): Promise<{ error: string }> {
   try {
-    const { username, email, password } = signUpSchema.parse(credentials)
+    const { name, email, password } = signUpSchema.parse(credentials)
 
     const passwordHash = await hash(password, {
       memoryCost: 19456,
@@ -25,28 +26,8 @@ export async function signUp(
 
     const userId = generateIdFromEntropySize(10)
 
-    const existingUsername = await prisma.user.findFirst({
-      where: {
-        username: {
-          equals: username,
-          mode: "insensitive",
-        },
-      },
-    })
-
-    if (existingUsername) {
-      return {
-        error: "Username already taken",
-      }
-    }
-
-    const existingEmail = await prisma.user.findFirst({
-      where: {
-        email: {
-          equals: email,
-          mode: "insensitive",
-        },
-      },
+    const existingEmail = await prisma.user.findUnique({
+      where: { email },
     })
 
     if (existingEmail) {
@@ -58,8 +39,7 @@ export async function signUp(
     await prisma.user.create({
       data: {
         id: userId,
-        username,
-        displayName: username,
+        displayName: name,
         email,
         passwordHash,
       },

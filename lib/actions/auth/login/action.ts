@@ -1,26 +1,24 @@
 "use server"
 
 import prisma from "@/lib/db/prisma"
-import { loginSchema, LoginValues } from "@/lib/utils"
+import { loginSchema } from "@/lib/utils"
 import { verify } from "@node-rs/argon2"
 import { isRedirectError } from "next/dist/client/components/redirect"
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
 import { lucia } from "../auth"
 import { mergeAnonymousCartIntoUserCart } from "../../cart/lib"
+import { z } from "zod"
 
 export async function login(
-  credentials: LoginValues
+  credentials: z.infer<typeof loginSchema>
 ): Promise<{ error: string }> {
   try {
-    const { username, password } = loginSchema.parse(credentials)
+    const { email, password } = loginSchema.parse(credentials)
 
-    const existingUser = await prisma.user.findFirst({
+    const existingUser = await prisma.user.findUnique({
       where: {
-        username: {
-          equals: username,
-          mode: "insensitive",
-        },
+        email,
       },
     })
 

@@ -116,7 +116,7 @@ export function AuthButton({ className }: { className: string }) {
         Login
       </Link>
       <Link
-        href="/sign-up"
+        href="/register"
         className={cn(buttonVariants({ className: "font-bold" }))}
       >
         Sign up

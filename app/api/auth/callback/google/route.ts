@@ -64,8 +64,6 @@ export async function GET(req: NextRequest) {
 
     let userId = generateIdFromEntropySize(10)
 
-    const username = slugify(googleUser.name) + "-" + userId.slice(0, 4)
-
     // Try Make this work
     const existingEmail = await prisma.user.findUnique({
       where: {
@@ -86,7 +84,6 @@ export async function GET(req: NextRequest) {
       await prisma.user.create({
         data: {
           id: userId,
-          username,
           avatarUrl: googleUser.picture,
           email: googleUser.email,
           displayName: googleUser.name,

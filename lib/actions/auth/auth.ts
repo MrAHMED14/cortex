@@ -2,9 +2,7 @@ import { Lucia, Session, User } from "lucia"
 import { PrismaAdapter } from "@lucia-auth/adapter-prisma"
 import { cookies } from "next/headers"
 import { Google } from "arctic"
-
 import prisma from "@/lib/db/prisma"
-import { cache } from "react"
 
 const adapter = new PrismaAdapter(prisma.session, prisma.user)
 
@@ -18,7 +16,6 @@ export const lucia = new Lucia(adapter, {
   getUserAttributes(databaseUserAttributes) {
     return {
       id: databaseUserAttributes.id,
-      username: databaseUserAttributes.username,
       email: databaseUserAttributes.email,
       role: databaseUserAttributes.role,
       displayName: databaseUserAttributes.displayName,
@@ -37,7 +34,6 @@ declare module "lucia" {
 
 interface DatabaseUserAttributes {
   id: string
-  username: string
   displayName: string
   email: string | null
   role: "ADMIN" | "USER"
@@ -48,8 +44,7 @@ interface DatabaseUserAttributes {
 export const google = new Google(
   process.env.GOOGLE_CLIENT_ID!,
   process.env.GOOGLE_CLIENT_SECRET!,
-  // `http://localhost:3000/api/auth/callback/google`
-  `https://cortex-store.vercel.app/api/auth/callback/google`
+  process.env.NEXT_PUBLIC_GOOGLE_REDIRECT!
 )
 
 export const validateRequest = async (): Promise<

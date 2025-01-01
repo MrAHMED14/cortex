@@ -19,7 +19,7 @@ export function prismaDynamicQuery({
         OR: [
           { email: { search: searchString } },
           { displayName: { search: searchString } },
-          { username: { search: searchString } },
+          { id: { search: searchString } },
         ],
       }
     : {}

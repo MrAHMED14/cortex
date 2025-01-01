@@ -1,5 +1,6 @@
 "use client"
 
+import * as z from "zod"
 import { useState, useTransition } from "react"
 import Link from "next/link"
 import { Button, buttonVariants } from "@/components/ui/button"
@@ -16,31 +17,33 @@ import {
 } from "@/components/ui/form"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import * as z from "zod"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { AlertCircle } from "lucide-react"
 import { AuthLayout } from "@/components/auth/auth-layout"
-import { loginSchema } from "@/lib/utils"
-import { login } from "@/lib/actions/auth/login/action"
+import { signUpSchema } from "@/lib/utils"
+import { signUp } from "@/lib/actions/auth/sign-up/action"
 
-export default function LoginPage() {
+export default function RegisterPage() {
   const [isPending, startTransition] = useTransition()
   const [error, setError] = useState<string | null>(null)
 
-  const form = useForm<z.infer<typeof loginSchema>>({
-    resolver: zodResolver(loginSchema),
+  const form = useForm<z.infer<typeof signUpSchema>>({
+    resolver: zodResolver(signUpSchema),
     defaultValues: {
+      name: "",
       email: "",
       password: "",
     },
   })
 
-  function onSubmit(values: z.infer<typeof loginSchema>) {
+  function onSubmit(values: z.infer<typeof signUpSchema>) {
     startTransition(async () => {
-      const { error } = await login(values)
+      const { error } = await signUp(values)
 
       if (error) {
-        setError("Invalid email or password. Please try again.")
+        setError(
+          "This email is already registered. Please use a different email."
+        )
       } else {
         setError(null)
       }
@@ -49,16 +52,16 @@ export default function LoginPage() {
 
   return (
     <AuthLayout
-      title="Welcome back"
-      description="Enter your details to access your account"
+      title="Create an account"
+      description="Enter your details to create your account"
       footerContent={
         <p className="text-sm text-gray-600">
-          Don&apos;t have an account?{" "}
+          Already have an account?{" "}
           <Link
-            href="/register"
+            href="/login"
             className="font-semibold text-primary hover:underline"
           >
-            Sign up
+            Sign in
           </Link>
         </p>
       }
@@ -72,6 +75,19 @@ export default function LoginPage() {
               <AlertDescription>{error}</AlertDescription>
             </Alert>
           )}
+          <FormField
+            control={form.control}
+            name="name"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Name</FormLabel>
+                <FormControl>
+                  <Input placeholder="John Doe" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
           <FormField
             control={form.control}
             name="email"
@@ -99,7 +115,7 @@ export default function LoginPage() {
             )}
           />
           <Button disabled={isPending} type="submit" className="w-full">
-            {isPending ? "Signing in..." : "Sign in"}
+            {isPending ? "Signing up..." : "Sign up"}
           </Button>
           <div className="relative">
             <div className="absolute inset-0 flex items-center">
@@ -124,7 +140,7 @@ export default function LoginPage() {
           </a>
 
           <span className="text-xs text-gray-600">
-            By signing in, you agree to our{" "}
+            By signing up, you agree to our{" "}
             <Link href="/privacy-policy" className="hover:underline">
               Privacy Policy
             </Link>{" "}

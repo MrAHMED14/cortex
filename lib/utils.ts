@@ -11,17 +11,24 @@ import ky from "ky"
 const requiredString = z.string().trim().min(1, "Required")
 
 export const signUpSchema = z.object({
-  email: requiredString.email("Invalid email address"),
-  username: requiredString.regex(
-    /^[a-zA-Z0-9_-]+$/,
-    "Only letters, numbers, - and _ allowed"
-  ),
-  password: requiredString.min(8, "Must be at least 8 characters"),
+  name: z.string().min(2, {
+    message: "Name must be at least 2 characters.",
+  }),
+  email: z.string().email({
+    message: "Please enter a valid email address.",
+  }),
+  password: z.string().min(8, {
+    message: "Password must be at least 8 characters.",
+  }),
 })
 
 export const loginSchema = z.object({
-  username: requiredString,
-  password: requiredString,
+  email: z.string().email({
+    message: "Please enter a valid email address.",
+  }),
+  password: z.string().min(8, {
+    message: "Password must be at least 8 characters.",
+  }),
 })
 
 export const orderFormSchema = z.object({
@@ -35,7 +42,7 @@ export const orderFormSchema = z.object({
     )
   }, "Invalid date format"),
   cardNumber: requiredString,
-  wilaya: requiredString, 
+  wilaya: requiredString,
   commune: requiredString,
   firstName: requiredString,
   lastName: requiredString,
