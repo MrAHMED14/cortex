@@ -1,5 +1,4 @@
-import DashboardNavbar from "@/components/dashboard/dashboard-navbar"
-import MaxWidthWrapper from "@/components/global/max-width-wrapper"
+import { SideNav } from "@/components/sidebar/sidebar-nav"
 
 export default async function DashboardLayout({
   children,
@@ -7,9 +6,14 @@ export default async function DashboardLayout({
   children: React.ReactNode
 }) {
   return (
-    <MaxWidthWrapper className="flex flex-col">
-      <DashboardNavbar />
-      <main className="my-5">{children}</main>
-    </MaxWidthWrapper>
+    <SideNav>
+      <div className="flex flex-1">
+        <div className="md:border-l border-neutral-200 bg-white flex flex-col gap-2 flex-1 w-full h-full">
+          <div className="w-full h-full p-2 md:px-10 md:py-6 overflow-y-auto">
+            {children}
+          </div>
+        </div>
+      </div>
+    </SideNav>
   )
 }

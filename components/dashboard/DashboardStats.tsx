@@ -15,7 +15,7 @@ export async function DashboardStats() {
         </CardHeader>
         <CardContent>
           <p className="text-2xl font-bold">
-            ${new Intl.NumberFormat("en-US").format(500 / 100)}
+            ${new Intl.NumberFormat("en-US").format(7800)}
           </p>
           <p className="text-xs text-muted-foreground">Based on 100 Charges</p>
         </CardContent>
@@ -26,7 +26,7 @@ export async function DashboardStats() {
           <ShoppingBag className="h-4 w-4 text-blue-500" />
         </CardHeader>
         <CardContent>
-          <p className="text-2xl font-bold">+{12}</p>
+          <p className="text-2xl font-bold">+{462}</p>
           <p className="text-xs text-muted-foreground">Total Sales</p>
         </CardContent>
       </Card>

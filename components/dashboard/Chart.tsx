@@ -1,4 +1,4 @@
-"use client";
+"use client"
 
 import {
   ResponsiveContainer,
@@ -9,33 +9,33 @@ import {
   Tooltip,
   Legend,
   Line,
-} from "recharts";
+} from "recharts"
 
 interface iAppProps {
   data: {
-    date: string;
-    revenue: number;
-  }[];
+    date: string
+    revenue: number
+  }[]
 }
 
 const aggregateData = (data: any) => {
   const aggregated = data.reduce((acc: any, curr: any) => {
     if (acc[curr.date]) {
-      acc[curr.date] += curr.revenue;
+      acc[curr.date] += curr.revenue
     } else {
-      acc[curr.date] = curr.revenue;
+      acc[curr.date] = curr.revenue
     }
-    return acc;
-  }, {});
+    return acc
+  }, {})
 
   return Object.keys(aggregated).map((date) => ({
     date,
     revenue: aggregated[date],
-  }));
-};
+  }))
+}
 
 export function Chart({ data }: iAppProps) {
-  const proccesedData = aggregateData(data);
+  const proccesedData = aggregateData(data)
   return (
     <ResponsiveContainer width="100%" height={400}>
       <LineChart data={proccesedData}>
@@ -52,5 +52,5 @@ export function Chart({ data }: iAppProps) {
         />
       </LineChart>
     </ResponsiveContainer>
-  );
+  )
 }
