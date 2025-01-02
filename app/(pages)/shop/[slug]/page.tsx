@@ -32,7 +32,12 @@ export default async function ProductDetailsPage({
           </div>
         </main>
 
-        <HomeSection title="Related Products" url="/shop" />
+        <HomeSection
+          title="Related Products"
+          url="/shop"
+          slug={product.slug}
+          subcategoryId={product.subcategoryId}
+        />
       </div>
     </MaxWidthWrapper>
   )

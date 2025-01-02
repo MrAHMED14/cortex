@@ -1,6 +1,7 @@
 import MaxWidthWrapper from "@/components/global/max-width-wrapper"
-import SlideReveal from "@/components/slider/slide-reveal"
 import HomeSection from "@/components/product/home-section"
+import ProductSkeleton from "@/components/product/skeleton"
+import SlideReveal from "@/components/slider/slide-reveal"
 import { Suspense } from "react"
 
 export const dynamic = "force-dynamic"
@@ -19,21 +20,37 @@ export default function Home() {
       </section>
 
       <div className="space-y-28 mt-6">
-        {/* Popular Products */}
-        <Suspense fallback={<p>Loading...</p>}>
+        <Suspense
+          fallback={
+            <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 place-items-center gap-10">
+              {Array(5)
+                .fill(5)
+                .map((_, index) => (
+                  <ProductSkeleton key={index} />
+                ))}
+            </div>
+          }
+        >
+          {/* Popular Products */}
           <HomeSection title="Popular Products" url="/shop" />
 
           {/* New Arrivals */}
           <HomeSection title="New Arrivals" url="/shop" />
 
           {/* Desktop & PC */}
-          <HomeSection title="Desktop & PC" url="/shop" />
+          <HomeSection title="Desktop & PC" url="/shop?subcategory=laptops" />
 
-          {/* Clavier & Souris */}
-          <HomeSection title="Clavier & Souris" url="/shop" />
+          {/* Tablets */}
+          <HomeSection title="Tablets" url="/shop?subcategory=tablets" />
 
-          {/* Software */}
-          <HomeSection title="Software" url="/shop" />
+          {/* Switches */}
+          <HomeSection title="Switches" url="/shop?subcategory=switches" />
+
+          {/* Microphones */}
+          <HomeSection
+            title="Microphones"
+            url="/shop?subcategory=microphones"
+          />
         </Suspense>
       </div>
     </MaxWidthWrapper>

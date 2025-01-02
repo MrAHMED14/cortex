@@ -288,3 +288,96 @@ export async function getCategoriesWithSub() {
     throw error
   }
 }
+
+export async function getPopularProdcts() {
+  try {
+    const products = await prisma.product.findMany({
+      where: {
+        isPublish: true,
+        slug: {
+          in: [
+            "msi-mag-b650-tomahawk-wifi",
+            "microsoft-surface-laptop-5",
+            "hyperx-quadcast-s",
+            "gigabyte-aorus-rtx-3070-master",
+            "apple-ipad-pro-12-9",
+          ],
+        },
+      },
+      take: 5,
+    })
+
+    revalidatePath("/")
+    return products
+  } catch (error) {
+    console.error(error)
+    throw error
+  }
+}
+
+export async function getNewArrivalsProdcts() {
+  try {
+    const products = await prisma.product.findMany({
+      where: {
+        isPublish: true,
+        slug: {
+          in: [
+            "nvidia-geforce-rtx-3050",
+            "netgear-nighthawk-rax200",
+            "bequiet-pure-power-11-fm-750",
+            "tp-link-sg3428x",
+            "logitech-g502-x-plus",
+          ],
+        },
+      },
+      take: 5,
+    })
+
+    revalidatePath("/")
+    return products
+  } catch (error) {
+    console.error(error)
+    throw error
+  }
+}
+
+export async function getHomeProdcts(subcategory: string) {
+  try {
+    const products = await prisma.product.findMany({
+      where: {
+        isPublish: true,
+        subcategory: {
+          name: subcategory,
+        },
+      },
+      take: 5,
+    })
+
+    revalidatePath("/")
+    return products
+  } catch (error) {
+    console.error(error)
+    throw error
+  }
+}
+
+export async function getRelatedProdcts(subcategoryId: string, slug: string) {
+  try {
+    const products = await prisma.product.findMany({
+      where: {
+        isPublish: true,
+        subcategoryId: subcategoryId,
+        slug: {
+          not: slug,
+        },
+      },
+      take: 5,
+    })
+
+    revalidatePath("/")
+    return products
+  } catch (error) {
+    console.error(error)
+    throw error
+  }
+}
