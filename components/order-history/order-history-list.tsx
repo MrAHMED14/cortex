@@ -35,11 +35,6 @@ export function HeadOrderHistoryDetails({
 }: {
   order: OrderWithProduct
 }) {
-  const subtotal = order.items.reduce(
-    (acc, item) => acc + item.quantity * item.product.price,
-    0
-  )
-
   return (
     <div className="border border-neutral-200 bg-neutral-50 shadow-sm dark:border-stone-700 rounded-lg py-6 px-4 sm:px-6 sm:flex sm:items-center sm:justify-between sm:space-x-6 lg:space-x-8">
       <dl className="divide-y divide-gray-200 dark:divide-stone-700 space-y-6 text-sm flex-auto sm:divide-y-0 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-x-6 lg:w-1/2 lg:flex-none lg:gap-x-8">
@@ -54,13 +49,13 @@ export function HeadOrderHistoryDetails({
         <div className="flex justify-between pt-6 sm:block sm:pt-0">
           <dt className="font-medium dark:text-white">Order status</dt>
           <dd className="sm:mt-1 text-muted-foreground capitalize">
-            {order.status}
+            {order.status.toLowerCase()}
           </dd>
         </div>
         <div className="flex justify-between pt-6 font-medium dark:text-white sm:block sm:pt-0">
           <dt>Total amount</dt>
           <dd className="sm:mt-1 text-muted-foreground">
-            {formatUSD(formatFloatNumber(subtotal))}
+            {formatUSD(formatFloatNumber(order.total))}
           </dd>
         </div>
       </dl>

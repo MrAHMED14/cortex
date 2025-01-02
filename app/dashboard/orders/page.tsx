@@ -1,4 +1,3 @@
-import { Button, buttonVariants } from "@/components/ui/button"
 import {
   Card,
   CardContent,
@@ -7,44 +6,18 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import {
   Table,
   TableBody,
-  TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import {
-  CheckIcon,
-  MoreHorizontal,
-  PlusCircle,
-  UserIcon,
-  XIcon,
-} from "lucide-react"
-import Image from "next/image"
-import Link from "next/link"
-import { countProducts, getAllProducts } from "@/lib/actions/product/action"
 
-import { ProductFilterValues } from "@/lib/types/product"
-import { Prisma } from "@prisma/client"
-import { Badge } from "@/components/ui/badge"
-import { formatFloatNumber, formatUSD } from "@/lib/utils"
+import OrdersRows from "@/components/dashboard/orders-rows"
 import Search from "@/components/filter/search"
-import IsPublishedFilter from "@/components/filter/published-filter"
-import SortOptionDashboard from "@/components/filter/sort-option-dashboard"
-import { MobileFilterDashboard } from "@/components/filter/mobile-flter-dashboard"
 import ProductPagination from "@/components/product/pagination"
 import { countOrders, getAllOrders } from "@/lib/actions/order/action"
 import { OrderFilterValues } from "@/lib/types/order"
-import OrdersRows from "@/components/dashboard/orders-rows"
 
 interface ProductsRouteProps {
   searchParams: { [key: string]: string | string[] | undefined }
