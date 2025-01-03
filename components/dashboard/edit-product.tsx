@@ -288,9 +288,7 @@ export default function EditProduct({
         },
         id
       )
-      router.refresh()
       router.back()
-      removeAll()
       toast.success("Product Updated!")
     })
   }
@@ -338,6 +336,7 @@ export default function EditProduct({
                       <Textarea
                         {...field}
                         disabled={isPending}
+                        rows={5}
                         placeholder="Enter product description here"
                       />
                     </FormControl>
