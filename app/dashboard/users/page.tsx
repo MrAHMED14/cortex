@@ -38,6 +38,8 @@ import { Badge } from "@/components/ui/badge"
 import { countUsers, getAllUsers } from "@/lib/actions/users/action"
 import { UserFilterValues } from "@/lib/types/user"
 import { getUser } from "@/lib/actions/auth/action"
+import { cn } from "@/lib/utils"
+import { IconShieldCheck, IconUserHexagon } from "@tabler/icons-react"
 
 interface ProductsRouteProps {
   searchParams: { [key: string]: string | string[] | undefined }
@@ -118,7 +120,21 @@ export default async function UsersRoute({ searchParams }: ProductsRouteProps) {
                   </TableCell>
                   <TableCell>{user.email}</TableCell>
                   <TableCell>
-                    <Badge className="text-xs">{user.role}</Badge>
+                    <Badge
+                      className={cn(
+                        "text-xs",
+                        user.role === "ADMIN" && "bg-sky-700 hover:bg-sky-800",
+                        user.role === "USER" && "bg-zinc-700 hover:bg-zinc-800"
+                      )}
+                    >
+                      {user.role === "USER" && (
+                        <IconUserHexagon className="mr-1 h-3 w-3" />
+                      )}
+                      {user.role === "ADMIN" && (
+                        <IconShieldCheck className="mr-1 h-3 w-3" />
+                      )}
+                      {user.role}
+                    </Badge>
                   </TableCell>
                   <TableCell>
                     {new Date(user.createdAt).toDateString()}
