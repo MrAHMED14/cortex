@@ -6,6 +6,11 @@ import OrderHistoryList from "@/components/order-history/order-history-list"
 import MaxWidthWrapper from "@/components/global/max-width-wrapper"
 import Title from "@/components/ui/title"
 import { getUser } from "@/lib/actions/auth/action"
+import { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "Your Orders",
+}
 
 export default async function MyOrdersPage() {
   const user = await getUser()

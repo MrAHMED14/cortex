@@ -22,6 +22,11 @@ import { AlertCircle } from "lucide-react"
 import { AuthLayout } from "@/components/auth/auth-layout"
 import { loginSchema } from "@/lib/utils"
 import { login } from "@/lib/actions/auth/login/action"
+import { Metadata } from "next"
+
+const metadata: Metadata = {
+  title: "Login",
+}
 
 export default function LoginPage() {
   const [isPending, startTransition] = useTransition()

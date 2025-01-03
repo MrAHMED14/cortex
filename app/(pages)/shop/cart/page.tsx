@@ -1,6 +1,11 @@
 import CartList from "@/components/cart/cart-list"
 import MaxWidthWrapper from "@/components/global/max-width-wrapper"
 import Title from "@/components/ui/title"
+import { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "Your Cart",
+}
 
 export default function CartPage() {
   return (

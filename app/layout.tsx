@@ -6,9 +6,17 @@ import { cn } from "@/lib/utils"
 import "./globals.css"
 
 export const metadata: Metadata = {
-  title: "Cortex store",
+  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL as string),
+  title: {
+    default: "Cortex Store",
+    template: "%s - Cortex Store",
+  },
   description:
     "The ultimate destination for high-quality tech products and the latest gadgets, offering exceptional prices and top-notch service.",
+
+  twitter: {
+    card: "summary_large_image",
+  },
 }
 
 export default async function RootLayout({

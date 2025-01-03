@@ -22,6 +22,11 @@ import { AlertCircle } from "lucide-react"
 import { AuthLayout } from "@/components/auth/auth-layout"
 import { signUpSchema } from "@/lib/utils"
 import { signUp } from "@/lib/actions/auth/sign-up/action"
+import { Metadata } from "next"
+
+const metadata: Metadata = {
+  title: "Register",
+}
 
 export default function RegisterPage() {
   const [isPending, startTransition] = useTransition()

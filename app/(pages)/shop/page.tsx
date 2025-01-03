@@ -15,6 +15,11 @@ import ProductReels from "@/components/product/first-list"
 import SortOption from "@/components/filter/sort-option"
 import Filter from "@/components/filter/filter"
 import Title from "@/components/ui/title"
+import { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "Shop",
+}
 
 interface ShopPageProps {
   searchParams: { [key: string]: string | string[] | undefined }

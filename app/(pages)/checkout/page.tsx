@@ -1,6 +1,11 @@
 import MaxWidthWrapper from "@/components/global/max-width-wrapper"
 import OrderList from "@/components/order/order-list"
 import Title from "@/components/ui/title"
+import { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "Checkout",
+}
 
 export default function CheckoutPage() {
   return (
