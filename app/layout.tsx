@@ -8,7 +8,7 @@ import "./globals.css"
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL as string),
   verification: {
-    google: "jb87j8BcZ8ZP9S4QgE3e50Q6bUjMc0a1AGVsjz5lANY",
+    google: "SiypDumEEYY334xchqMlyfBKIbJH7BPrchXsZwAF0x8",
   },
   title: {
     default: "Cortex Store",
