@@ -60,7 +60,11 @@ export default async function Navbar() {
 
             {user ? (
               // Avatar Component
-              <UserAvatar username={user.displayName} imgUrl={user.avatarUrl} />
+              <UserAvatar
+                username={user.displayName}
+                imgUrl={user.avatarUrl}
+                email={user.email ?? "cortex-store@cortex.com"}
+              />
             ) : (
               // Auth Component
               <AuthButton className="hidden min-[375px]:flex" />

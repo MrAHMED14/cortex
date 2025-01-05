@@ -35,12 +35,6 @@ export const orderFormSchema = z.object({
   street: requiredString,
   cardName: requiredString,
   cvv: z.string().length(3, "Must be 3 digits"),
-  expiryDate: requiredString.refine((value) => {
-    const [month, year] = value.split("/").map(Number)
-    return (
-      value.split("/").length === 2 && month >= 1 && month <= 12 && year > 24
-    )
-  }, "Invalid date format"),
   cardNumber: requiredString,
   wilaya: requiredString,
   commune: requiredString,

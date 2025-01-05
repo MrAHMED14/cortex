@@ -15,40 +15,30 @@ import { Label } from "@/components/ui/label"
 import { useRouter } from "next/navigation"
 import { useState, useTransition } from "react"
 
-import { updateProfile } from "@/lib/actions/users/action"
-import { User } from "@prisma/client"
 import { Loader2, Upload } from "lucide-react"
 import { toast } from "sonner"
-import Select from "../ui/select"
+import { updateUsername } from "@/lib/actions/users/action"
+import { User } from "lucia"
 
-const roles = [
-  { value: "USER", label: "User" },
-  { value: "ADMIN", label: "Admin" },
-]
-
-export default function ProfileEditPage({ data }: { data: User }) {
+export default function EditAccountProfile({ data }: { data: User }) {
   const [isLoading, startTransition] = useTransition()
   const [username, setUsername] = useState<string>(data.displayName)
-  const [role, setRole] = useState<string>(data.role)
   const [previewUrl, setPreviewUrl] = useState(data.avatarUrl)
   const router = useRouter()
 
-  const handleRoleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const value = e.target.value
-    setRole(value)
-  }
   const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value
     setUsername(value)
   }
 
-  const updateRoleButton = () => {
+  const updateButton = () => {
     if (!username || username.length === 0) {
       toast.error("Your name cannot be empty")
       return
     }
+
     startTransition(async () => {
-      await updateProfile(data.id, username, role as "ADMIN" | "USER")
+      await updateUsername(data.id, username)
       toast.success("Profile updated successfully")
     })
     router.refresh()
@@ -96,19 +86,9 @@ export default function ProfileEditPage({ data }: { data: User }) {
               disabled
             />
           </div>
-          <div className="space-y-2">
-            <Label htmlFor="role">Role</Label>
-            <Select value={role} onChange={handleRoleChange}>
-              {roles.map((role) => (
-                <option key={role.value} value={role.value}>
-                  {role.label}
-                </option>
-              ))}
-            </Select>
-          </div>
         </CardContent>
         <CardFooter>
-          <Button type="submit" disabled={isLoading} onClick={updateRoleButton}>
+          <Button type="submit" disabled={isLoading} onClick={updateButton}>
             {isLoading ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />

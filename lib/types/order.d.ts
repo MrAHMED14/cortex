@@ -5,7 +5,6 @@ export interface Address {
   street: string
   cardNumber: string
   cvv: string
-  expiryDate: string
   cardName: string
   wilaya: string
   commune: string

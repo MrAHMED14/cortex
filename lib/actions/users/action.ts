@@ -82,3 +82,53 @@ export async function updateRole(userId: string, newRole: "ADMIN" | "USER") {
     throw error
   }
 }
+
+export async function updateProfile(
+  userId: string,
+  username: string,
+  newRole: "ADMIN" | "USER"
+) {
+  if (!userId || !username || !newRole) {
+    throw new Error(
+      "Invalid input: userId, username, and newRole are required."
+    )
+  }
+  try {
+    const updatedUser = await prisma.user.update({
+      where: {
+        id: userId,
+      },
+      data: {
+        role: newRole,
+        displayName: username,
+      },
+    })
+    revalidatePath("/dashboard/users")
+    return updatedUser
+  } catch (error) {
+    console.error(error)
+    throw error
+  }
+}
+
+export async function updateUsername(userId: string, username: string) {
+  if (!userId || !username) {
+    throw new Error("Invalid input: userId, username are required.")
+  }
+
+  try {
+    const updatedUser = await prisma.user.update({
+      where: {
+        id: userId,
+      },
+      data: {
+        displayName: username,
+      },
+    })
+    revalidatePath("/account")
+    return updatedUser
+  } catch (error) {
+    console.error(error)
+    throw error
+  }
+}

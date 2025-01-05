@@ -12,13 +12,14 @@ import {
 import { logout } from "@/lib/actions/auth/action"
 import { cn } from "@/lib/utils"
 import { User } from "lucia"
-import { Loader2Icon, LogOutIcon } from "lucide-react"
+import { Loader2Icon, LogOutIcon, UserIcon } from "lucide-react"
 import { usePathname } from "next/navigation"
 import { useTransition } from "react"
 import { Button, buttonVariants } from "../ui/button"
 
 import Image from "next/image"
 import Link from "next/link"
+import { IconTruckDelivery } from "@tabler/icons-react"
 
 interface MenuItemsProps {
   className?: string
@@ -127,9 +128,10 @@ export function AuthButton({ className }: { className: string }) {
 
 interface UserAvatarProps {
   username: string
+  email: string
   imgUrl?: string | null
 }
-export function UserAvatar({ username, imgUrl }: UserAvatarProps) {
+export function UserAvatar({ username, imgUrl, email }: UserAvatarProps) {
   const [isPending, startTransition] = useTransition()
 
   async function handleLogout() {
@@ -161,21 +163,33 @@ export function UserAvatar({ username, imgUrl }: UserAvatarProps) {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuLabel>{username}</DropdownMenuLabel>
+        <DropdownMenuLabel>
+          <span className="capitalize">{username.toLowerCase()}</span>
+          <br />
+          <span className="text-xs text-neutral-900">{email}</span>
+        </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <Link href="#">
-          <DropdownMenuItem className="cursor-pointer">
+        <Link href="/account">
+          <DropdownMenuItem className="cursor-pointer flex items-center gap-1 text-neutral-700">
+            <UserIcon className="w-4 h-4 flex-shrink-0" />
             My Account
           </DropdownMenuItem>
         </Link>
         <Link href="/my-orders">
-          <DropdownMenuItem className="cursor-pointer">Orders</DropdownMenuItem>
+          <DropdownMenuItem className="cursor-pointer flex items-center gap-1 text-neutral-700">
+            <IconTruckDelivery className="w-4 h-4 flex-shrink-0" />
+            Orders
+          </DropdownMenuItem>
         </Link>
         <DropdownMenuItem
-          className="cursor-pointer flex items-center gap-2"
+          className="cursor-pointer flex items-center gap-1 text-neutral-700"
           onClick={handleLogout}
         >
-          {isPending ? <Loader2Icon size={18} /> : <LogOutIcon size={18} />}
+          {isPending ? (
+            <Loader2Icon className="w-4 h-4 flex-shrink-0 animate-spin" />
+          ) : (
+            <LogOutIcon className="w-4 h-4 flex-shrink-0" />
+          )}
           <span>Logout</span>
         </DropdownMenuItem>
       </DropdownMenuContent>

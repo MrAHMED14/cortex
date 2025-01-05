@@ -50,7 +50,11 @@ export default async function DashboardNavbar() {
 
         {/* Right */}
         <div className="w-full flex items-center justify-end gap-2">
-          <UserAvatar username={user.displayName} imgUrl={user.avatarUrl} />
+          <UserAvatar
+            username={user.displayName}
+            imgUrl={user.avatarUrl}
+            email={user.email ?? ""}
+          />
           <div className="md:hidden flex">
             <Sheet>
               <SheetTrigger>

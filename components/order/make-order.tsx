@@ -51,7 +51,6 @@ export default function MakeOrder({ cart, userId, userEmail }: MakeOrderProps) {
       street: "",
       cardNumber: "",
       cvv: "",
-      expiryDate: "",
       cardName: "",
       wilaya: "",
       commune: "",
@@ -63,6 +62,10 @@ export default function MakeOrder({ cart, userId, userEmail }: MakeOrderProps) {
 
   function onSubmit(values: OrderFormValues) {
     startTransition(async () => {
+      if (values.cardNumber !== "4242 4242 4242 4242") {
+        toast.error("Your card is invalid. Please use a valid card.")
+        return
+      }
       await createOrder({ order: cart, userId, address: values })
       form.reset()
       toast.success("You order was placed successfully", { duration: 3000 })
@@ -280,36 +283,33 @@ export default function MakeOrder({ cart, userId, userEmail }: MakeOrderProps) {
               />
 
               <div className="flex w-full items-center gap-2 my-2">
-                <div className="w-full">
-                  <FormField
-                    control={form.control}
-                    name="expiryDate"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>
-                          Expiry date <span className="text-red-500">*</span>
-                        </FormLabel>
-                        <FormControl>
-                          <Input
-                            placeholder="MM/YY"
-                            maxLength={5}
-                            pattern="(0[1-9]|1[0-2])\/([0-9]{2})"
-                            {...field}
-                            onChange={(e) => {
-                              const value = e.target.value
-                                .replace(/\D/g, "")
-                                .replace(/(\d{2})(\d{0,2})/, "$1/$2")
-                                .trim()
-                              field.onChange(value)
-                            }}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+                <div className="w-full flex items-center gap-2">
+                  <div className="w-full space-y-2">
+                    <Label id="mm">Month</Label>
+                    <Select htmlFor="mm">
+                      {Array(12)
+                        .fill(12)
+                        .map((_, index) => (
+                          <option key={index} value="">
+                            {index + 1}
+                          </option>
+                        ))}
+                    </Select>
+                  </div>
+
+                  <div className="w-full space-y-2">
+                    <Label id="yy">Year</Label>
+
+                    <Select htmlFor="yy">
+                      {Array.from({ length: 11 }, (_, index) => (
+                        <option key={index} value="">
+                          {25 + index}
+                        </option>
+                      ))}
+                    </Select>
+                  </div>
                 </div>
-                <div className="w-full">
+                <div className="w-[70%] sm:w-full">
                   <FormField
                     control={form.control}
                     name="cvv"
